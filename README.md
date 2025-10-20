@@ -1,19 +1,14 @@
 
-# Bookwise Analytics: Book Club Subscription Optimization
+# Bookwise Analytics: Book Subscription Optimization
 
 ## Business Understanding
 
 ### Context
 
-The client is a subscription-based book service. Subscribers pay a monthly fee that grants them one “credit” redeemable for any book in the library.
-
-However, internal data shows a decline in active usage: many subscribers remain subscribed but fail to redeem their monthly credits, eventually leading to churn.
-
-The company currently relies on editorial curation (human staff recommending new titles weekly), which lacks personalization and doesn’t adapt to individual member preferences.
-
-To improve engagement and retention, the business wants to integrate personalized machine learning–driven recommendations alongside its editorial picks.
+This project simulates a subscription-based book club where members receive one monthly “credit” to select a book from a large catalog. Despite stable subscriber numbers, engagement and redemption rates are declining, often due to poor book-member matches.
 
 This project explores how a subscription-based book club can optimize member engagement and retention through data-driven book recommendations.
+
 The aim is to transition from manual, intuition-based book curation to an **evidence-based selection system** that maximizes satisfaction, loyalty, and catalog diversity.
 
 ---
@@ -22,14 +17,14 @@ The aim is to transition from manual, intuition-based book curation to an **evid
 
 The business faces a growing inactive user base. While the library continues to expand, users struggle to find content that resonates with their tastes, leading to disengagement and eventual cancellation.
 
-This project aims to move from intuition-based book selection to a data-driven recommendation system that optimizes member satisfaction and long-term retention
+This project aims to move from intuition-based book selection to a **predictive recommendation system** that optimizes member satisfaction and long-term retention.
 
 ---
 
 ### Business Objectives
 
 1. **Understand** what book features (e.g. genre, ratings, price, reviews, publication recency) are most correlated with member engagement.
-2. **Predict** which upcoming or lesser-known titles are likely to achieve high engagement.
+2. **Predict** which titles are likely to achieve high satisfaction and retention potential.
 3. **Simulate** potential retention uplift if algorithmic recommendations replace (or supplement) editorial curation.
 4. **Ensure** the recommendation system maintains diversity and fairness across genres.
 
@@ -37,7 +32,7 @@ This project aims to move from intuition-based book selection to a data-driven r
 
 ### Analytical Goals
 
-* Use cross-platform book data (Goodreads, Goodbooks-10k, Amazon) to **analyze feature correlations** with engagement.
+* Use **Best Books Ever** and **Goodbooks-10k** datasets to simulate internal catalog data and member behavior, respectively.
 * Build a **hybrid machine learning model** that predicts book satisfaction using historical patterns in ratings and reviews.
 * Create a **synthetic retention simulation** to estimate the potential uplift in active user retention when the model is applied.
 * Deploy an **interactive Streamlit dashboard** that allows stakeholders to explore insights, prediction outputs, and diversity metrics.
@@ -79,19 +74,18 @@ This project aims to move from intuition-based book selection to a data-driven r
 
 ## Datasets
 
-This project integrates multiple **publicly available book datasets** to emulate the data ecosystem of a subscription-based digital library. Each dataset contributes a complementary perspective on reader engagement, book attributes, and market behavior.
+This project integrates multiple **publicly available sources** to emulate both **internal system activity** and **catalog-wide data** of a subscription book service.
 
-| Dataset                      | Source                                                                                       | Purpose                                                                         |
-| ---------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| **Best Books Ever** | [GitHub – goodreads_bbe_dataset](https://github.com/scostap/goodreads_bbe_dataset)                             | Core metadata: titles, genres, ratings, popularity (bbeScore, votes).           |
-| **Goodbooks-10k**            | [GitHub – goodbooks-10k](https://github.com/zygmuntz/goodbooks-10k)                          | User-book interactions (6M ratings from 53K users) for collaborative filtering. |
-| **Amazon Popular Books**     | [GitHub – Amazon-popular-books-dataset](https://github.com/luminati-io/Amazon-popular-books-dataset) | Market context: price, review count, commercial performance.                    |
-| **Amazon Bestselling Books**     | [GitHub – Amazon Bestselling Books](https://github.com/suha98/Analysis-of-Amazon-Bestselling-Books-2009-2019) | Market context: price, review count, commercial performance.                    |
+| Dataset                           | Source                                                                       | Purpose                                                                         |
+| --------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| **Best Books Ever (BBE)**         | [Zenodo / GitHub](https://github.com/scostap/goodreads_bbe_dataset)          | Simulates internal catalog performance; includes bbeScore, votes, ratings.      |
+| **Goodbooks-10k**                 | [GitHub – zygmuntz/goodbooks-10k](https://github.com/zygmuntz/goodbooks-10k) | Simulates user behavior: 6 M ratings from 53 K users (collaborative filtering). |
+| **Overlap (BBE ∩ Goodbooks)**     | Derived (8 K books; ≈ 80 % of BBE, 15 % of Goodbooks)                        | Enables cross-dataset linking and unified metadata.                             |
+| *(tentative)* **Google Books API** | [Google Books API](https://developers.google.com/books)                      | Fetches commercial or descriptive metadata.             |
 
-> **Why these sources:** Together they capture quality perception (Goodreads), behavioral data (Goodbooks), and commercial success (Amazon); enabling a 360° view of engagement drivers.
+> **Why these sources:** These datasets together capture book quality (Goodreads ratings), user behavior (Goodbooks), and market context (Google API), forming a realistic simulation environment.
 
-Each dataset will be cleaned and unified into a consistent schema *(tentative)* (book_id, title, author, genre, rating, reviews, popularity_score, price, publish_year, user_id)
-
+Each dataset will be cleaned and unified into a consistent schema *(tentative)* (`book_id`, `title`, `author`, `genre`, `rating`, `reviews`, `popularity_score`, `price`, `publish_year`, `user_id`)
 
 ---
 
@@ -114,20 +108,22 @@ Each dataset will be cleaned and unified into a consistent schema *(tentative)* 
 
 ## Minimum Viable Product (MVP)
 
-| Goal                                | Visual / Task                                             | Outcome                                 |
-| ----------------------------------- | --------------------------------------------------------- | --------------------------------------- |
-| Explore data quality & distribution | Histograms, missing-data matrices, pairplots              | Identify cleaning needs & feature gaps  |
-| Show engagement vs rating patterns  | Scatter/box by genre; correlation heatmap                 | Quantify relationship strength          |
-| Build baseline model                | Popularity baseline + simple CF or regression             | Benchmark for predictive model          |
-| Simulate engagement uplift      | Algorithmic uplift vs baselines (random & popularity) | Offline uplift metric |
-| Measure diversity                   | Genre entropy & catalog coverage                          | Detect narrow vs broad recommendations  |
+| Goal                                  | Visual / Task                                                                                                                   | Outcome                                                           |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| Explore data quality & distribution   | Histograms, missing-data matrices, pairplots                                                                                    | Identify cleaning needs & feature gaps                            |
+| Show engagement vs rating patterns    | Scatter/box by genre; correlation heatmap                                                                                       | Quantify relationship strength                                    |
+| Build baseline model                  | Popularity baseline + simple collaborative filtering or regression                                                              | Benchmark for predictive model                                    |
+| Compare recommendation strategies | Display side-by-side lists for **Model**, **Editorial**, and **Random** selections; show mean predicted engagement per strategy | Demonstrate model use in-app and evaluate engagement uplift proxy |
+| Measure diversity                     | Genre entropy & catalog coverage                                                                                                | Detect narrow vs broad recommendations and ensure fairness        |
 
-### Stretch Goal
 
-| Goal                        | Visual / Task                                 | Outcome                              |
-| --------------------------- | --------------------------------------------- | ------------------------------------ |
-| Sentiment from reviews | NLP features (TF-IDF / polarity histograms)   | Stronger content-based signals       |
+### Stretch Goals
 
+| Enhancement                      | Description                                                                                                           |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| **Engagement Uplift Simulation** | Extend comparison page with simulated retention uplift %, and allow user to tune parameters (K, baseline, weighting). |
+| **NLP/Google API Integration**   | Enrich features for hybrid modeling.                                                                                  |
+| **Caching & Optimization**       | Improve dashboard responsiveness and loading time.                                                                    |
 
 ---
 
@@ -141,7 +137,7 @@ Estimate the potential uplift in engagement and retention achievable through a p
 * **Collaborative filtering** using `surprise` or `lightfm`
 * **Hybrid model** blending content-based (TF-IDF / embeddings) + behavioral features
 * **Gradient boosting models** (`XGBoost`, `CatBoost`) for engagement prediction
-* **NLP sentiment analysis** on reviews (if available) using `nltk` or `spacy`
+* **NLP analysis** *(stretch)* on description (if available) using `nltk` or `spacy`
 
 **Python / ML Libraries (tentative):**
 `pandas`, `numpy`, `scikit-learn`, `surprise`, `lightfm`, `xgboost`, `nltk`/`spacy` *(optional)*, `plotly`, `streamlit`
@@ -157,25 +153,24 @@ Estimate the potential uplift in engagement and retention achievable through a p
 
 ## Dashboard Design (Streamlit MVP)
 
-| Page                                | Purpose                                                                                           | Key Visuals & Elements                                                                                                |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| **1. Executive Summary** | Present key KPIs from the modeling stage: RMSE/R², **simulated engagement uplift %**, and genre diversity index. | Metric cards, summary text, simple bar chart comparing Random vs Popularity vs Model strategies. |
-| **2. Book Analytics Explorer**      | Explore correlations and patterns between book features (ratings, reviews, genres, year).         | Interactive scatter/heatmap using Plotly; filter by genre or rating.                                                  |
-| **3. Insights & Diversity**         | Summarize engagement trends and show genre representation balance.                                | Bar or pie chart for genre shares; entropy indicator; textual interpretation.                                         |
-| **4. Uplift Simulator** *(stretch)* | Add interactive controls (K, baseline) to test different scenarios.      | Slider (K), dropdown (baseline), dynamic bar chart for engagement uplift %, with tooltip showing mean predicted engagement (proxy for retention probability). |
+| Page                                                              | Purpose                                                                                              | Key Visuals & Elements                                                                                                     |
+| ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| **1. Executive Summary**                                          | Show KPIs (RMSE, R², engagement score averages).                                                     | Metric cards displaying RMSE/R², mean engagement per strategy, summary text, and simple bar chart for KPI comparison.      |
+| **2. Book Analytics Explorer**                                    | Explore correlations and trends.                                                                     | Interactive Plotly scatterplots and heatmaps (e.g. rating vs. genre, review count vs. satisfaction) with dynamic filters. |
+| **3. Recommendation Comparison (Model vs. Editorial vs. Random)** | Allow user selection, display predicted scores per list. | User dropdown (simulated user), side-by-side tables of recommendations, and bar chart comparing mean engagement scores.    |
+| **4. Insights & Diversity**                                       | Genre representation, fairness, entropy.                                                             | Bar or pie charts showing genre distribution, Shannon entropy indicator, and textual interpretation of diversity trends.   |
 
 
 ---
 
 ## MVP vs. Stretch Scope
 
-| Category       | MVP                                                                                               | Stretch                                                                                                  |
-| -------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| **Data**       | Use **BBE** and **Goodbooks-10k** datasets for engagement and behavioral signals.                 | Integrate a limited subset of **Amazon Bestselling Books** to analyze publication year or price effects. |
-| **ML**         | Implement a **baseline regression or CF model** to predict engagement scores and simulate uplift. | Add a **single hybrid variant** (e.g., regression + genre embeddings) for comparison.                    |
-| **Visuals**    | Three Streamlit pages: Executive Summary, Analytics Explorer, and Insights.                       | Add one **Uplift Simulator** page with simple controls (K-slider, baseline selector).                    |
-| **Evaluation** | Report **RMSE/R²**, simulated **uplift %**, and **genre diversity (entropy)**.                    | Include a small **feature-importance plot** or **top-K relevance check**.                                |
-| **Deployment** | Deploy MVP Streamlit app on Heroku (static data + saved model).                                   | Add lightweight **caching** for faster dashboard loading.                                                |
-
+| Category       | MVP                                                                                                                               | Stretch                                                                                                   |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| **Data**       | Use **BBE** and **Goodbooks-10k** datasets for engagement and behavioral signals (8 K overlap subset).                            | Integrate **Google Books API** for additional commercial and descriptive metadata.                        |
+| **ML**         | Implement a **baseline regression or collaborative filtering model** to generate predicted engagement scores.                     | Add a **hybrid variant** (e.g., combining regression with genre embeddings or NLP features).              |
+| **Visuals**    | Four Streamlit pages: **Executive Summary**, **Analytics Explorer**, **Recommendation Comparison**, and **Insights & Diversity**. | Add an **Uplift Simulator** page with interactive controls (K-slider, baseline selector, uplift metrics). |
+| **Evaluation** | Report **RMSE/R²**, **mean engagement comparison** across model vs editorial vs random, and **genre diversity (entropy)**.        | Include **feature-importance plots**, **Precision@K**, or **relevance validation** visualizations.        |
+| **Deployment** | Deploy MVP Streamlit app on **Heroku or Streamlit Cloud** (static data + saved model).                                            | Add **caching** and response-time optimization for faster interactivity.                                  |
 
 ---
