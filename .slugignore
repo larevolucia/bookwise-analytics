@@ -1,3 +1,7 @@
 .venv
 .env
 *.ipynb
+
+data/raw/*.csv
+data/raw/*_sample.csv
+data/processed/*.csv

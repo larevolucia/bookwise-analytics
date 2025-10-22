@@ -1,5 +1,8 @@
 .venv
 .env
-data/
 __pycache__/
 note.txt
+# Ignore large data files
+data/raw/*.csv
+!data/raw/*_sample.csv
+
