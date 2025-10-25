@@ -1,6 +1,8 @@
 
 # Bookwise Analytics: Book Subscription Optimization
 
+CRISP-DM steps docummented at: [Project board](https://github.com/users/larevolucia/projects/15/views/1)
+
 ## Business Understanding
 
 ### Context
@@ -43,8 +45,8 @@ This project aims to move from intuition-based book selection to a **predictive 
 
 | ID       | Business Requirement                                                                      | Success Indicator                                  | Dataset(s)             |
 | -------- | ----------------------------------------------------------------------------------------- | -------------------------------------------------- | ---------------------- |
-| **BR-1** | Identify which book and genre features correlate with higher engagement.                  | Correlation ≥ 0.4 between features and engagement. | BBE, Amazon            |
-| **BR-2** | Predict which titles are most likely to achieve high engagement based on historical data. | Model RMSE < 1.0 or R² > 0.7.                      | BBE, Goodbooks, Amazon |
+| **BR-1** | Identify which book and genre features correlate with higher engagement.                  | Correlation ≥ 0.4 between features and engagement. | BBE            |
+| **BR-2** | Predict which titles are most likely to achieve high engagement based on historical data. | Model RMSE < 1.0 or R² > 0.7.                      | BBE, Goodbooks |
 | **BR-3** | Estimate potential retention uplift from algorithmic vs manual (editorial) selection.     | Simulated uplift ≥ 10%.                            | BBE, Goodbooks         |
 | **BR-4** | Maintain diversity and fairness in recommendations across genres.                         | Shannon Entropy ≥ baseline (0.7).                  | All                    |
 
@@ -174,3 +176,11 @@ Estimate the potential uplift in engagement and retention achievable through a p
 | **Deployment** | Deploy MVP Streamlit app on **Heroku or Streamlit Cloud** (static data + saved model).                                            | Add **caching** and response-time optimization for faster interactivity.                                  |
 
 ---
+
+
+## References
+
+- [Regex101](https://regex101.com/): Online regex tester and debugger.
+- [Text Cleaning in Python](https://pbpython.com/text-cleaning.html): A guide on cleaning text data using Python.
+- [Pandas Documentation](https://pandas.pydata.org/docs/): datetime, combine_first,
+- [DateUtils Documentation](https://dateutil.readthedocs.io/): for advanced date parsing.
