@@ -1,0 +1,19 @@
+{
+    "english": "en", "german": "de", "french": "fr", "arabic": "ar",
+    "spanish": "es", "italian": "it", "portuguese": "pt", "russian": "ru",
+    "chinese": "zh", "japanese": "ja", "hindi": "hi", "dutch": "nl",
+    "swedish": "sv", "norwegian": "no", "polish": "pl", "turkish": "tr",
+    "korean": "ko", "danish": "da", "finnish": "fi", "hebrew": "he",
+    "greek": "el", "czech": "cs", "romanian": "ro", "indonesian": "id",
+    "thai": "th", "hungarian": "hu", "vietnamese": "vi", "persian": "fa",
+    "icelandic": "is", "latin": "la", "swahili": "sw", "bulgarian": "bg",
+    "croatian": "hr", "estonian": "et", "tamil": "ta", "urdu": "ur",
+    "malayalam": "ml", "slovak": "sk", "telugu": "te", "azerbaijani": "az",
+    "lithuanian": "lt", "ukrainian": "uk", "faroese": "fo", "basque": "eu",
+    "macedonian": "mk", "maltese": "mt", "gujarati": "gu", "amharic": "am",
+    "albanian": "sq", "latvian": "lv", "bosnian": "bs", "afrikaan": "af",
+    "mongolian": "mn", "tagalog": "tl", "galician": "gl", "slovenian": "sl",
+    "armenian": "hy", "georgian": "ka", "kannada": "kn", "marathi": "mr",
+    "nepali": "ne", "punjabi": "pa", "filipino": "fil", "mayan": "myn",
+    "unknown": "unknown", "multilingual": "multi"
+}
