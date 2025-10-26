@@ -3,6 +3,9 @@
 __pycache__/
 note.txt
 # Ignore large data files
-data/raw/*.csv
 !data/raw/*_sample.csv
 
+data/raw/*.csv
+data/processed/*.csv
+data/interim/bbe/*.csv
+data/interim/goodbooks/*.csv
