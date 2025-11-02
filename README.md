@@ -153,6 +153,30 @@ Estimate the potential uplift in engagement and retention achievable through a p
 
 ---
 
+
+### Notebook Structures
+
+```
+/notebooks
+├── 01_Data_Collection.ipynb      # initial exploration and completeness check of all datasets
+├── 01_Data_Cleaning.ipynb        # regex cleaning, NaN handling, and type conversions
+├── 02_Data_Imputation.ipynb      # external API enrichment and dictionary-based caching
+├── 03_Feature_Engineering.ipynb  # feature creation (engagement_score, recency, popularity)
+└── 04_Modeling.ipynb             # clustering and recommendation model development
+```
+
+> Each notebook represents a phase of the **CRISP-DM** process:
+>
+> * **Data Collection (LO7)** – explores and audits dataset quality and structure.
+> * **Data Cleaning (LO7.2)** – standardizes and validates fields for analytical use.
+> * **Data Imputation (LO7.1)** – retrieves missing values via APIs while ensuring reproducibility.
+> * **Feature Engineering (LO4 & LO5)** – generates predictive features tied to business hypotheses.
+> * **Modeling (LO5)** – builds and evaluates machine learning pipelines to meet business KPIs.
+>
+> This modular organization maintains reproducibility and transparency from raw data to model evaluation, meeting the **Code Institute’s CRISP-DM and Learning Outcome** standards for the Predictive Analytics project.
+
+---
+
 ## Dashboard Design (Streamlit MVP)
 
 | Page                                                              | Purpose                                                                                              | Key Visuals & Elements                                                                                                     |
@@ -183,4 +207,10 @@ Estimate the potential uplift in engagement and retention achievable through a p
 - [Regex101](https://regex101.com/): Online regex tester and debugger.
 - [Text Cleaning in Python](https://pbpython.com/text-cleaning.html): A guide on cleaning text data using Python.
 - [Pandas Documentation](https://pandas.pydata.org/docs/): datetime, combine_first,
+- [NumPy](https://numpy.org/doc/stable/): exponential, logarithm, arange
 - [DateUtils Documentation](https://dateutil.readthedocs.io/): for advanced date parsing.
+- [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/): for consistent commit messages.
+- On Gaussian Distribution: [Free Code Camp](https://www.freecodecamp.org/news/how-to-explain-data-using-gaussian-distribution-and-summary-statistics-with-python/), [Quantinsti](https://blog.quantinsti.com/gaussian-distribution/), [GeeksForGeeks Machine Learning](https://www.geeksforgeeks.org/machine-learning/gaussian-distribution-in-machine-learning/), [eeksForGeeks Python](https://www.geeksforgeeks.org/python/python-normal-distribution-in-statistics/), [PennState College](https://online.stat.psu.edu/stat857/node/77/)
+- On Binnin Data: [GeeksForGeeks](https://www.geeksforgeeks.org/numpy/binning-data-in-python-with-scipy-numpy/)
+- NotebookLM: Learning guide on data cleaning, to help me find next steps without providing any code.
+
