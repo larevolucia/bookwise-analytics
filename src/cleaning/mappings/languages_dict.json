@@ -15,5 +15,11 @@
     "mongolian": "mn", "tagalog": "tl", "galician": "gl", "slovenian": "sl",
     "armenian": "hy", "georgian": "ka", "kannada": "kn", "marathi": "mr",
     "nepali": "ne", "punjabi": "pa", "filipino": "fil", "mayan": "myn",
-    "unknown": "unknown", "multilingual": "multi"
+    "unknown": "unknown", "multilingual": "multi", "en": "en",
+    "eng": "en", "en-us": "en", "en-ca": "en", "en-gb": "en",
+    "spa": "es", "fre": "fr", "nl": "nl", "ara": "ar", "por": "pt",
+    "ger": "de", "nor": "no", "jpn": "ja", "vie": "vi", "ind": "id",
+    "pol": "pl", "tur": "tr", "dan": "da", "fil": "fil", "ita": "it",
+    "per": "fa", "swe": "sv", "rum": "ro", "mul": "multi", "rus": "ru",
+    "nan": "unknown"
 }
