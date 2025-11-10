@@ -7,4 +7,5 @@ data/sample/*.csv
 data/processed/*.csv
 data/interim/bbe/*.csv
 data/cleaned/bbe/*.csv
+data/cleaned/goodbooks/*.csv
 data/interim/goodbooks/*.csv
