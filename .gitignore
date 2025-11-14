@@ -10,5 +10,6 @@ data/processed/*.csv
 data/cleaned/bbe/*.csv
 data/cleaned/goodbooks/*.csv
 data/interim/bbe/*.pkl
+data/interim/goodbooks/*.pkl
 data/interim/bbe/*.csv
 data/interim/goodbooks/*.csv
