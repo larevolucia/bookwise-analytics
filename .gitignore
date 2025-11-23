@@ -1,15 +1,35 @@
+# Python
 .venv
+venv/
+env/
 .env
 __pycache__/
-note.txt
-# Ignore large data files
-!data/raw/*_sample.csv
+*.py[cod]
+*$py.class
+*.so
+.Python
 
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+#  Jupyter Notebooks
+.ipynb_checkpoints/
+test.ipynb
+note.txt
+
+# ignore all CSVs 
 data/raw/*.csv
 data/processed/*.csv
-data/cleaned/bbe/*.csv
-data/cleaned/goodbooks/*.csv
-data/interim/bbe/*.pkl
-data/interim/goodbooks/*.pkl
-data/interim/bbe/*.csv
-data/interim/goodbooks/*.csv
+data/cleaned/**/*.csv
+data/interim/**/*.pkl
+data/interim/**/*.csv
+
+# except sample CSVs
+!data/raw/*_sample.csv
+
+# OS
+.DS_Store
+Thumbs.db

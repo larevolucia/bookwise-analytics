@@ -10,4 +10,56 @@ data/interim/bbe/*.pkl
 data/interim/goodbooks/*.pkl
 data/cleaned/bbe/*.csv
 data/cleaned/goodbooks/*.csv
+data/cleaned/merge/*.csv
 data/interim/goodbooks/*.csv
+src/cleaning/utils/*.py
+src/mappings/*.json
+notebooks/*.ipynb
+tests/*.py
+
+# Git and version control
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+docs/
+*.md
+
+# Development and testing
+tests/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Data directories (if not needed in production)
+data/
+
+# Notebooks
+notebooks/
+
+# Build and distribution
+build/
+dist/
+*.egg-info/
+
+# Environment files
+.env.example
+.env.local
+.env.development
+
+# Other
+.DS_Store
+Thumbs.db
