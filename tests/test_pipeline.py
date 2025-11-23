@@ -71,20 +71,18 @@ class TestApplyCleanersSelectively:
 
         assert 'publication_date_openlib_clean' in result.columns
 
-        # Simple year should be parsed
-        date_0 = result.loc[0, 'publication_date_openlib_clean']
-        assert date_0 is not None
-        assert '1949' in str(date_0)
+        # check that dates are formatted as ISO strings
+        assert result.loc[0, 'publication_date_openlib_clean'] == '1949-01-01'
 
-        # Full date should be parsed
         date_1 = result.loc[1, 'publication_date_openlib_clean']
-        assert date_1 is not None
-        assert '1937' in str(date_1)
+        assert '1937-09-21' == date_1
 
-        # ISO date should work
         date_3 = result.loc[3, 'publication_date_openlib_clean']
-        assert date_3 is not None
-        assert '2020' in str(date_3)
+        assert '2020-01-15' == date_3
+
+        # invalid dates should be NaN
+        assert pd.isna(result.loc[2, 'publication_date_openlib_clean'])
+        assert pd.isna(result.loc[4, 'publication_date_openlib_clean'])
 
     def test_clean_openlibrary_language(self, sample_openlibrary_data):
         """Test that OpenLibrary language codes are standardized"""

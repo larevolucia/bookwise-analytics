@@ -36,3 +36,24 @@ def clean_date_string(date_str):
     # remove st, nd, rd, th (like 'April 27th 2010' → 'April 27 2010')
     cleaned = re.sub(r'(\d+)(st|nd|rd|th)', r'\1', str(date_str))
     return cleaned.strip()
+
+
+def format_date_iso(date_obj):
+    """
+    Convert a datetime object to ISO format string (YYYY-MM-DD).
+    Returns np.nan for invalid inputs.
+    """
+    if pd.isna(date_obj):
+        return np.nan
+
+    try:
+        if isinstance(date_obj, pd.Timestamp):
+            return date_obj.strftime("%Y-%m-%d")
+        elif isinstance(date_obj, str):
+            # If already a string, try to parse and reformat
+            parsed = pd.to_datetime(date_obj, errors='coerce')
+            if pd.notna(parsed):
+                return parsed.strftime("%Y-%m-%d")
+        return np.nan
+    except (ValueError, AttributeError):
+        return np.nan

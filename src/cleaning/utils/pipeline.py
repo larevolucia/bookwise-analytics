@@ -1,6 +1,10 @@
 """ Cleaning pipeline utilities """
 from .language import clean_language_field, load_language_mapping
-from .dates import parse_mixed_date, clean_date_string
+from .dates import (
+    parse_mixed_date,
+    clean_date_string,
+    format_date_iso
+)
 from .numeric import clean_pages_field, clean_price
 from .categories import clean_genre_list, parse_list_field
 from .identifiers import clean_isbn
@@ -67,19 +71,17 @@ def apply_cleaners_selectively(
         ),
         'publication_date': (  # OpenLibrary uses 'publication_date'
             f'publication_date{source_suffix}',
-            lambda col: df[col].apply(
-                parse_mixed_date
-                ).apply(
-                    clean_date_string
-                    )
+            lambda col: df[col]
+            .apply(clean_date_string)    # 1. Clean raw string
+            .apply(parse_mixed_date)      # 2. Parse to datetime
+            .apply(format_date_iso)       # 3. Format as ISO string
         ),
         'published_date': (  # Google Books uses 'publishedDate'
             f'published_date{source_suffix}',
-            lambda col: df[col].apply(
-                parse_mixed_date
-                ).apply(
-                    clean_date_string
-                    )
+            lambda col: df[col]
+            .apply(clean_date_string)
+            .apply(parse_mixed_date)
+            .apply(format_date_iso)
         ),
         'pages': (
             f'pages{source_suffix}',
@@ -164,9 +166,13 @@ def apply_cleaners_selectively(
                         lambda x: clean_language_field(x, lang_dict)
                     )
                 elif field in ['publication_date', 'published_date']:
-                    df[target_col] = df[alt_col].apply(parse_mixed_date).apply(
+                    df[target_col] = df[alt_col].apply(
                         clean_date_string
-                        )
+                        ).apply(
+                            parse_mixed_date
+                            ).apply(
+                                format_date_iso
+                                )
                 elif field in ['pages', 'page_count']:
                     df[target_col] = df[alt_col].apply(clean_pages_field)
                 elif field in ['subjects', 'categories']:
