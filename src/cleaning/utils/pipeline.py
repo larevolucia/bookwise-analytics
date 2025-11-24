@@ -76,8 +76,8 @@ def apply_cleaners_selectively(
             .apply(parse_mixed_date)      # 2. Parse to datetime
             .apply(format_date_iso)       # 3. Format as ISO string
         ),
-        'published_date': (  # Google Books uses 'publishedDate'
-            f'published_date{source_suffix}',
+        'publishedDate': (  # Google Books uses 'publishedDate'
+            f'publishedDate{source_suffix}',
             lambda col: df[col]
             .apply(clean_date_string)
             .apply(parse_mixed_date)
@@ -87,8 +87,8 @@ def apply_cleaners_selectively(
             f'pages{source_suffix}',
             lambda col: df[col].apply(clean_pages_field)
         ),
-        'page_count': (  # Google Books uses 'pageCount'
-            f'page_count{source_suffix}',
+        'pageCount': (  # Google Books uses 'pageCount'
+            f'pageCount{source_suffix}',
             lambda col: df[col].apply(clean_pages_field)
         ),
         'subjects': (  # OpenLibrary uses 'subjects'
@@ -165,7 +165,7 @@ def apply_cleaners_selectively(
                     df[target_col] = df[alt_col].apply(
                         lambda x: clean_language_field(x, lang_dict)
                     )
-                elif field in ['publication_date', 'published_date']:
+                elif field in ['publication_date', 'publishedDate']:
                     df[target_col] = df[alt_col].apply(
                         clean_date_string
                         ).apply(
@@ -173,7 +173,7 @@ def apply_cleaners_selectively(
                             ).apply(
                                 format_date_iso
                                 )
-                elif field in ['pages', 'page_count']:
+                elif field in ['pages', 'pageCount']:
                     df[target_col] = df[alt_col].apply(clean_pages_field)
                 elif field in ['subjects', 'categories']:
                     df[target_col] = df[alt_col].apply(clean_genre_list)

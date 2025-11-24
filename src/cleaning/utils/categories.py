@@ -87,3 +87,56 @@ def clean_post_parsing(genres, *lists_to_remove):
     removal_terms = set().union(*lists_to_remove)
 
     return [g for g in genres if g.lower().strip() not in removal_terms]
+
+
+def map_subjects_to_genres(subjects):
+    """
+    Map OpenLibrary subjects to simplified genre categories.
+
+    Args:
+        subjects: List of subject strings from OpenLibrary
+
+    Returns:
+        List of simplified genre strings, or None if no matches found
+    """
+    if not isinstance(subjects, list) or len(subjects) == 0:
+        return None
+
+    # Define genre mapping keywords
+    genre_mappings = {
+        'fiction': ['fiction', 'novel', 'stories'],
+        'fantasy': ['fantasy', 'magic', 'wizards', 'dragons'],
+        'science fiction': [
+            'science fiction',
+            'sci-fi',
+            'space',
+            'futuristic'
+            ],
+        'mystery': ['mystery', 'detective', 'crime', 'thriller'],
+        'romance': ['romance', 'love story', 'romantic'],
+        'horror': ['horror', 'supernatural', 'ghost', 'vampire'],
+        'historical fiction': ['historical fiction', 'history'],
+        'biography': ['biography', 'autobiography', 'memoir'],
+        'non-fiction': ['non-fiction', 'nonfiction'],
+        'young adult': ['young adult', 'ya', 'teen', 'juvenile'],
+        'children': ['children', 'juvenile', 'kids'],
+        'poetry': ['poetry', 'poems'],
+        'drama': ['drama', 'plays', 'theater'],
+        'adventure': ['adventure', 'action'],
+        'classics': ['classic', 'literature'],
+        'humor': ['humor', 'comedy', 'satire'],
+        'self-help': ['self-help', 'self help', 'motivational']
+    }
+
+    matched_genres = []
+    subjects_lower = [s.lower() for s in subjects]
+
+    # Check each genre mapping
+    for genre, keywords in genre_mappings.items():
+        for keyword in keywords:
+            if any(keyword in subject for subject in subjects_lower):
+                if genre not in matched_genres:
+                    matched_genres.append(genre)
+                break
+
+    return matched_genres if matched_genres else None
