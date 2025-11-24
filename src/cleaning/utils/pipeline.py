@@ -12,7 +12,8 @@ from .text_cleaning import clean_title, clean_description
 from .metadata_cleaning import (
     clean_and_split_authors,
     clean_series,
-    clean_awards_list
+    clean_awards_list,
+    clean_publisher_field,
 )
 
 
@@ -139,6 +140,10 @@ def apply_cleaners_selectively(
                     clean_awards_list
                     )
         ),
+        'publisher': (
+            f'publisher{source_suffix}',
+            lambda col: df[col].apply(clean_publisher_field)
+        ),
     }
 
     # if no fields specified, clean all available fields
@@ -201,5 +206,7 @@ def apply_cleaners_selectively(
                         ).apply(
                             clean_awards_list
                             )
+                elif field == 'publisher':
+                    df[target_col] = df[alt_col].apply(clean_publisher_field)
 
     return df

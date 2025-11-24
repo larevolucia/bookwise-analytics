@@ -37,6 +37,33 @@ class TestApplyCleanersSelectively:
             ]
         })
 
+    @pytest.fixture
+    def sample_publisher_data(self):
+        """Sample data with various publisher formats"""
+        return pd.DataFrame({
+            'book_id': [1, 2, 3, 4, 5, 6, 7, 8],
+            'title_clean': [
+                'Book 1',
+                'Book 2',
+                'Book 3',
+                'Book 4',
+                'Book 5',
+                'Book 6',
+                'Book 7',
+                'Book 8'
+            ],
+            'publisher_openlib': [
+                'HarperCollins Publishers',
+                '  Penguin Books  ',
+                'Random House.',
+                '"William Morrow"',
+                'Tor Books',
+                '123',  # numeric only
+                None,
+                'Simon & Schuster'
+            ]
+        })
+
     def test_clean_openlibrary_pages(self, sample_openlibrary_data):
         """Test that OpenLibrary page counts are cleaned correctly"""
         result = apply_cleaners_selectively(
@@ -135,3 +162,88 @@ class TestApplyCleanersSelectively:
         # Empty or None should return None
         assert result.loc[2, 'subjects_openlib_clean'] is None
         assert result.loc[4, 'subjects_openlib_clean'] is None
+
+    def test_clean_openlibrary_publisher(self, sample_publisher_data):
+        """Test that OpenLibrary publishers are cleaned and consolidated"""
+        result = apply_cleaners_selectively(
+            sample_publisher_data,
+            fields_to_clean=['publisher'],
+            source_suffix='_openlib',
+            target_suffix='_openlib_clean',
+            inplace=False
+        )
+
+        assert 'publisher_openlib_clean' in result.columns
+
+        # Test parent company consolidation
+        # (with apply_parent_mapping=True by default)
+        assert result.loc[0, 'publisher_openlib_clean'] == 'harpercollins'
+        assert result.loc[1, 'publisher_openlib_clean'] == (
+            'penguin random house'
+        )
+        assert result.loc[2, 'publisher_openlib_clean'] == (
+            'penguin random house'
+        )
+        assert result.loc[3, 'publisher_openlib_clean'] == 'harpercollins'
+        # Test unmapped publisher (should pass through cleaned)
+        assert result.loc[4, 'publisher_openlib_clean'] == 'tor books'
+
+        # Test numeric-only publisher (should be None)
+        assert pd.isna(result.loc[5, 'publisher_openlib_clean'])
+
+        # Test missing value
+        assert pd.isna(result.loc[6, 'publisher_openlib_clean'])
+
+        # Test ampersand removal in Simon & Schuster
+        result_7 = result.loc[7, 'publisher_openlib_clean']
+        assert 'simon' in result_7 and 'schuster' in result_7
+
+    def test_clean_multiple_fields_together(self, sample_openlibrary_data):
+        """Test cleaning multiple fields in a single pipeline call"""
+        result = apply_cleaners_selectively(
+            sample_openlibrary_data,
+            fields_to_clean=[
+                'pages',
+                'publication_date',
+                'language',
+                'subjects'
+                ],
+            source_suffix='_openlib',
+            target_suffix='_openlib_clean',
+            inplace=False
+        )
+
+        # Verify all cleaned columns were created
+        expected_columns = [
+            'pages_openlib_clean',
+            'publication_date_openlib_clean',
+            'language_openlib_clean',
+            'subjects_openlib_clean'
+        ]
+        for col in expected_columns:
+            assert col in result.columns
+
+        # Verify original columns are still present
+        assert 'pages_openlib' in result.columns
+        assert 'publication_date_openlib' in result.columns
+        assert 'language_openlib' in result.columns
+        assert 'subjects_openlib' in result.columns
+
+    def test_inplace_false_preserves_original(self, sample_openlibrary_data):
+        """Test that inplace=False doesn't modify original DataFrame"""
+        original_columns = sample_openlibrary_data.columns.tolist()
+
+        result = apply_cleaners_selectively(
+            sample_openlibrary_data,
+            fields_to_clean=['pages'],
+            source_suffix='_openlib',
+            target_suffix='_openlib_clean',
+            inplace=False
+        )
+
+        # Original DataFrame should be unchanged
+        assert sample_openlibrary_data.columns.tolist() == original_columns
+        assert 'pages_openlib_clean' not in sample_openlibrary_data.columns
+
+        # Result should have the new column
+        assert 'pages_openlib_clean' in result.columns

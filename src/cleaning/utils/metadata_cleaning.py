@@ -91,6 +91,63 @@ def assign_parent(pub, publisher_patterns):
     return pub
 
 
+def clean_publisher_field(
+    publisher: str,
+    apply_parent_mapping: bool = True
+) -> str:
+    """
+    Clean and standardize publisher names.
+
+    Args:
+        publisher: Raw publisher string
+        apply_parent_mapping:
+        Whether to consolidate imprints under parent companies
+
+    Returns:
+        Cleaned publisher name or None
+    """
+
+    # Handle missing/invalid values
+    if not isinstance(publisher, str) or publisher.strip() == "":
+        return None
+
+    if publisher.lower() in ['nan', 'none', '']:
+        return None
+
+    # Normalize unicode
+    cleaned = normalize_unicode(publisher)
+
+    # Lowercase and strip
+    cleaned = cleaned.strip().lower()
+
+    # Remove punctuation noise
+    cleaned = re.sub(r'[\"\'.]', '', cleaned)
+    cleaned = re.sub(r'\s+', ' ', cleaned)
+
+    # Drop numeric-only publishers
+    if re.fullmatch(r"\d+", cleaned):
+        return None
+
+    # Apply parent company mapping if requested
+    if apply_parent_mapping:
+        # Load publisher patterns
+        publisher_patterns = {
+            "harpercollins": [
+                "harpercollins", "harlequin", "harper", "william morrow",
+                "avon", "balzer", "bray", "ecco", "mariner", "hmh"
+            ],
+            "penguin random house": [
+                "penguin", "random house", "knopf", "vintage", "bantam",
+                "crown", "puffin", "dorling kindersley", "dk", "ballantine"
+            ],
+            # ... add other patterns from your notebook
+        }
+
+        cleaned = assign_parent(cleaned, publisher_patterns)
+
+    return cleaned
+
+
 def clean_awards_list(lst):
     """
     Clean and normalize awards list:
