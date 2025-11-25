@@ -1,0 +1,75 @@
+{
+  "harpercollins": [
+    "harpercollins", "harlequin", "harper", "william morrow",
+    "avon", "balzer", "bray", "ecco", "mariner",
+    "hmh", "katherine tegen", "harperteen", "broadside books"
+  ],
+  "penguin random house": [
+    "penguin", "random house", "knopf", "vintage", "bantam",
+    "crown", "puffin", "dorling kindersley", "dk", "ballantine",
+    "doubleday", "del rey", "berkley", "signet", "ace", "delacorte",
+    "anchor", "daw", "jove", "viking", "modern library", "riverhead",
+    "spectra", "razorbill", "philomel", "putnam", "dial books"
+  ],
+  "hachette": [
+    "hachette", "little brown", "orbit", "grand central",
+    "mulholland", "headline", "little, brown", "basic books",
+    "publicaffairs", "faithwords", "hodder", "yen press",
+    "quercus"
+  ],
+  "macmillan": [
+    "macmillan", "picador", "tor", "farrar straus", "farrar, straus",
+    "fsg", "st. martin", "holt", "metropolitan books", "griffin",
+    "starscape", "roaring brook", "square fish", "flatiron",
+    "feiwel and friends", "minotaur books", "forge", "tom doherty"
+  ],
+  "simon & schuster": [
+    "simon schuster", "simon & schuster", "atria", "gallery books",
+    "pocket books", "scribner", "touchstone", "simon pulse",
+    "aladdin", "west gallery", "atheneum",
+    "gallery/scout press", "free press"
+  ],
+  "bloomsbury": [
+    "bloomsbury", "walker", "walker books"
+  ],
+  "scholastic": [
+    "scholastic", "arthur a. levine", "graphix", "levine", "blue sky"
+  ],
+  "amazon publishing": [
+    "amazoncrossing", "amazon crossing", "little a", "lake union",
+    "montlake", "skyscape", "two lions", "47north",
+    "topple", "mindy's", "amazonencore", "amazon encore",
+    "amazon original stories"
+  ],
+  "oxford university press": [
+    "oxford university press", "oxford up", "oxford"
+  ],
+  "cambridge university press": [
+    "cambridge university press", "cambridge up"
+  ],
+  "wiley": [
+    "wiley", "john wiley", "john wiley & sons", "wiley-blackwell"
+  ],
+  "taylor & francis": [
+    "taylor & francis", "taylor and francis", "t&f", "crc press",
+    "routledge", "psychology press", "crc"
+  ],
+  "springer nature": [
+    "springer", "springer nature", "nature publishing", "palgrave",
+    "palgrave macmillan", "apl", "springer-verlag", "birkhäuser"
+  ],
+  "elsevier": [
+    "elsevier", "butterworth heinemann",
+    "morgan kaufmann", "north holland",
+    "academic press"
+  ],
+  "sage": [
+    "sage", "sage publishing", "sage publications"
+  ],
+  "mit press": [
+    "mit press", "massachusetts institute of technology press"
+  ],
+  "princeton university press": [
+    "princeton university press", "pup"
+  ]
+}

@@ -3,6 +3,7 @@ import unicodedata
 import re
 import html
 import numpy as np
+import pandas as pd
 from .helpers import normalize_unicode
 
 
@@ -126,3 +127,13 @@ def clean_title(title: str) -> str:
     text = text.strip().lower()
 
     return text
+
+
+def clean_description_nlp(text):
+    """ Clean description text for NLP processing."""
+    if pd.isna(text):
+        return None
+    text = normalize_unicode(text)
+    text = re.sub(r'<.*?>', ' ', text)
+    text = re.sub(r'\s+', ' ', text)
+    return text.strip()
