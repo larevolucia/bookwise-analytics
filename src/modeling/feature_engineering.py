@@ -56,15 +56,22 @@ def fe_engineering(
 
     df = df.copy()
 
+    print("Starting feature engineering...")
+
     # boolean columns
     if bool_cols is None:
         bool_cols = [col for col in df.columns if df[col].dtype == bool]
 
-    for col in bool_cols:
-        df[f"{col}_encoded"] = df[col].astype(int)
+    if bool_cols:
+        print("Computing boolean encodings...")
+        for col in bool_cols:
+            df[f"{col}_encoded"] = df[col].astype(int)
+            print(f"  ✓ Encoded: {col} -> {col}_encoded")
+        print("Completed boolean encodings.")
 
     # Genre-based features
     if genres_col in df.columns:
+        print("Computing genre-based features...")
 
         # genre_count
         df['genre_count'] = df[genres_col].apply(
@@ -87,9 +94,12 @@ def fe_engineering(
             lambda xs: int(any(g in top_genres for g in (xs or [])))
             if isinstance(xs, (list, set)) else 0
         )
+        print(f"Completed genre-based features"
+              f" using top {top_n_genres} genres.")
 
     # Author popularity proxy
     if author_col in df.columns:
+        print("Computing author-based features...")
         author_counts = df[author_col].value_counts()
 
         df['author_book_count'] = df[author_col].map(author_counts).fillna(0)
@@ -100,28 +110,36 @@ def fe_engineering(
         df['is_top_author'] = df[author_col].apply(
             lambda a: int(a in top_authors)
         )
+        print(f"Completed author-based features"
+              f" using top {top_n_authors} authors.")
 
     # Publisher popularity proxy
     if publisher_col in df.columns:
+        print("Computing publisher-based features...")
         publisher_counts = df[publisher_col].value_counts()
         df['publisher_book_count'] = (
             df[publisher_col].map(publisher_counts).fillna(0)
             )
+        print("Completed publisher-based features.")
 
     # Series metadata simplification
     if series_col in df.columns:
+        print("Computing series-based features...")
         df['in_series'] = df[series_col].notna().astype(int)
+        print("Completed series-based features.")
 
     # Textual metadata
     if text_col in df.columns:
+        print("Computing textual metadata features...")
         df['description_length'] = df[text_col].apply(
             lambda x: len(str(x)) if isinstance(x, str) else 0
         )
         df['description_word_count'] = df[text_col].apply(
             lambda x: len(str(x).split()) if isinstance(x, str) else 0
         )
+        print("Completed textual metadata features.")
 
-    # tText embeddings
+    # Text embeddings
     if encode_text_embeddings and text_col in df.columns:
         if ST_MODEL is None:
             raise ImportError(
@@ -129,10 +147,28 @@ def fe_engineering(
                 "Install it or set encode_text_embeddings=False."
             )
 
+        print("Computing text embeddings (this may take a while)...")
         df['text_embedding'] = df[text_col].apply(
             lambda x: ST_MODEL.encode(str(x))
             if isinstance(x, str)
             else np.zeros(384)
         )
+        print("Completed text embeddings.")
 
+        print("Computing scalar features from embeddings...")
+        # Derive scalar features from embeddings for correlation/PPS analysis
+        df['embedding_l2_norm'] = df['text_embedding'].apply(
+            lambda x: np.linalg.norm(x)
+            if isinstance(x, np.ndarray)
+            else np.nan
+        )
+        df['embedding_mean'] = df['text_embedding'].apply(
+            lambda x: x.mean() if isinstance(x, np.ndarray) else np.nan
+        )
+        df['embedding_std'] = df['text_embedding'].apply(
+            lambda x: x.std() if isinstance(x, np.ndarray) else np.nan
+        )
+        print("Completed scalar features from embeddings.")
+
+    print("Feature engineering complete.\n")
     return df
