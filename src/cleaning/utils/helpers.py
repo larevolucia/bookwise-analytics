@@ -1,4 +1,5 @@
 """ Helper functions for data cleaning."""
+import ast
 import unicodedata
 import re
 import pandas as pd
@@ -33,3 +34,15 @@ def normalize_unicode(s):
     s = re.sub(r"[^\w\s'\-]", "", s)
     s = re.sub(r"\s+", " ", s).strip().lower()
     return s
+
+
+def safe_literal_eval(val):
+    """Safely convert string representation of list to actual list."""
+    if pd.isna(val) or val == '' or val == '[]':
+        return []
+    if isinstance(val, list):
+        return val
+    try:
+        return ast.literal_eval(val)
+    except (ValueError, SyntaxError):
+        return []
