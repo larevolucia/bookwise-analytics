@@ -57,3 +57,23 @@ def format_date_iso(date_obj):
         return np.nan
     except (ValueError, AttributeError):
         return np.nan
+
+
+def extract_year(date_str):
+    """Extract year from date string."""
+    if pd.isna(date_str):
+        return np.nan
+    
+    date_str = str(date_str).strip()
+    
+    # Try to extract 4-digit year
+    import re
+    year_match = re.search(r'\b(1[5-9]\d{2}|20[0-2]\d)\b', date_str)
+    
+    if year_match:
+        year = int(year_match.group(1))
+        # Validate reasonable range
+        if 1800 <= year <= 2025:
+            return year
+    
+    return np.nan
