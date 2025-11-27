@@ -22,6 +22,7 @@ note.txt
 
 # ignore all CSVs 
 data/raw/*.csv
+data/raw/*.json
 data/processed/*.csv
 data/cleaned/**/*.csv
 data/interim/**/*.pkl
@@ -33,3 +34,5 @@ data/interim/**/*.csv
 # OS
 .DS_Store
 Thumbs.db
+bookwise_analytics.egg-info/
+bookwise_analytics.egg-info/*.txt

@@ -3,6 +3,7 @@
 *.ipynb
 
 data/raw/*.csv
+data/raw/*.json
 data/sample/*.csv
 data/processed/*.csv
 data/interim/bbe/*.csv
@@ -12,6 +13,8 @@ data/cleaned/bbe/*.csv
 data/cleaned/goodbooks/*.csv
 data/cleaned/merge/*.csv
 data/interim/goodbooks/*.csv
+outputs/datasets/cleaned/*.csv
+outputs/datasets/modeling/*.csv
 src/cleaning/utils/*.py
 src/mappings/*.json
 notebooks/*.ipynb
@@ -36,6 +39,7 @@ __pycache__/
 .pytest_cache/
 .coverage
 htmlcov/
+bookwise_analytics.egg-info/
 
 # IDE and editor files
 .vscode/

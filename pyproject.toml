@@ -6,25 +6,50 @@ build-backend = "setuptools.build_meta"
 name = "bookwise-analytics"
 version = "0.1.0"
 description = "Book recommendation and analytics system"
-requires-python = ">=3.8"
+requires-python = ">=3.9,<3.11"
 dependencies = [
-    "pandas>=2.0.0",
-    "numpy>=1.24.0",
+    "pandas==1.5.3",
+    "numpy==1.24.3",
     "python-dateutil>=2.8.0",
-    "requests>=2.31.0",
+    "requests==2.32.5",
     "tqdm>=4.65.0",
 ]
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=7.0.0",
+    "pytest==8.3.2",
     "pytest-cov>=4.0.0",
-    "ipykernel>=6.0.0",
-    "jupyter>=1.0.0",
+    "ipykernel==6.29.5",
+    "jupyter==1.0.0",
+]
+analytics = [
+    "scikit-learn==1.4.2",
+    "scipy==1.11.4",
+    "ppscore==1.3.0",
+]
+ml = [
+    "torch==2.5.1",
+    "torchvision==0.20.1",
+    "torchaudio==2.5.1",
+    "transformers==4.57.3",
+    "sentence-transformers==5.1.2",
+    "nltk==3.9.2",
+    "sentencepiece==0.2.1",
+]
+text = [
+    "rapidfuzz==3.9.3",
+    "thefuzz==0.22.1",
+    "python-Levenshtein==0.25.1",
+]
+viz = [
+    "streamlit==1.51.0",
+    "matplotlib==3.8.4",
+    "seaborn==0.13.2",
+    "altair==5.5.0",
 ]
 
 [tool.pytest.ini_options]
-pythonpath = ["."]
+pythonpath = [""]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 addopts = "-v --tb=short"
