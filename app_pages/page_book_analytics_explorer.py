@@ -6,7 +6,7 @@ import streamlit as st
 
 def _safe_image(filename: str, caption: str = ""):
     # Use Hugging Face URL for images (.webp format)
-    hf_base_url = " https://huggingface.co/datasets/revolucia/"
+    hf_base_url = "https://huggingface.co/datasets/revolucia/"
     images_url = f"{hf_base_url}bookwise-analytics-ml/resolve/main/eda_plots/"
     st.image(f"{images_url}{filename}", caption=caption)
 
