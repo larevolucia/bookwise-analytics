@@ -238,8 +238,88 @@ Estimate the potential uplift in engagement and retention achievable through a p
 | **Deployment** | Streamlit Cloud or Heroku with static data + saved model.  | Add caching and optimization.      |
 
 ---
+## Local Development
+
+To work locally (notebooks, utilities, ML), install via the project’s `pyproject.toml`. Avoid requirements.txt; it is only for Heroku.
+
+1) Create and activate a virtual environment:
+- macOS/Linux:
+  ```bash
+  python3 -m venv .venv && source .venv/bin/activate
+  ```
+- Windows:
+  ```bash
+  py -m venv .venv && .venv\Scripts\activate
+  ```
+
+2) Install the package with extras you need:
+- Core + notebooks + dev tools:
+  ```bash
+  pip install -U pip
+  pip install -e ".[dev,viz]"
+  ```
+- Add analytics:
+  ```bash
+  pip install -e ".[analytics]"
+  ```
+- Add ML/NLP (CPU-only, large):
+  ```bash
+  pip install -e ".[ml]"
+  ```
+- Add text matching utilities:
+  ```bash
+  pip install -e ".[text]"
+  ```
+
+3) Run tests:
+```bash
+pytest
+```
+
+4) Launch notebooks:
+```bash
+python -m ipykernel install --user --name bookwise-analytics
+jupyter notebook
+```
+
+> Do not use requirements.txt for local installs. It is intentionally minimal for Heroku deployment.
+
+## Heroku Deployment
+
+The Streamlit app on Heroku uses the minimal runtime libs defined in requirements.txt and the Procfile.
+
+Prerequisites:
+- Heroku CLI installed and logged in.
+- A Heroku app created.
+
+Deploy steps:
+```bash
+heroku git:remote -a <your-heroku-app-name>
+git add -A
+git commit -m "Deploy Streamlit app"
+git push heroku main
+```
+
+Heroku will:
+- Install dependencies from requirements.txt.
+- Use Procfile:
+  `web: sh setup.sh && streamlit run app.py --server.port=$PORT --server.address=0.0.0.0`
+- Generate Streamlit config via setup.sh.
+
+Environment variables:
+- Place any `.env` keys into Heroku config vars:
+```bash
+heroku config:set YOUR_ENV_KEY=your_value
+```
+
+Troubleshooting:
+- Check logs:
+```bash
+heroku logs --tail
+```
 
 
+---
 ## References
 
 - [Regex101](https://regex101.com/): Online regex tester and debugger.
