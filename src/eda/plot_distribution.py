@@ -45,8 +45,14 @@ def plot_top_books(df, catalog_name, n=20):
     # Set x-axis limits to zoom into the data range
     min_rating = top_books["rating_clean"].min()
     max_rating = top_books["rating_clean"].max()
-    padding = (max_rating - min_rating) * 0.1  # 10% padding
-    ax.set_xlim(min_rating - padding, max_rating + padding)
+
+    # handle identical ratings
+    if min_rating == max_rating:
+        padding = 0.1  # fixed padding
+        ax.set_xlim(min_rating - padding, max_rating + padding)
+    else:
+        padding = (max_rating - min_rating) * 0.1  # 10% padding
+        ax.set_xlim(min_rating - padding, max_rating + padding)
 
     # Invert y-axis so highest rating is at top
     ax.invert_yaxis()
@@ -111,7 +117,6 @@ def plot_top_genres(df, catalog_name, min_count=20):
 def plot_top_authors(df, catalog_name, min_books=5):
     """
     Display top-rated authors with minimum book count threshold.
-
     Parameters:
     -----------
     df : pd.DataFrame

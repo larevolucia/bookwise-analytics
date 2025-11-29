@@ -19,7 +19,8 @@ src/cleaning/utils/*.py
 src/mappings/*.json
 notebooks/*.ipynb
 tests/*.py
-
+outputs/eda_plots/*.png
+outputs/eda_plots/*.csv
 # Git and version control
 .git
 .gitignore

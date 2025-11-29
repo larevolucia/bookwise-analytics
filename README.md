@@ -2,6 +2,7 @@
 # Bookwise Analytics: Book Subscription Optimization
 
 CRISP-DM steps docummented at: [Project board](https://github.com/users/larevolucia/projects/15/views/1)
+Live App: [Streamlit Dashboard](https://bookwise-analyics-1d891f772a24.herokuapp.com/)
 
 ## Business Understanding
 
@@ -179,6 +180,40 @@ Estimate the potential uplift in engagement and retention achievable through a p
 > This modular organization maintains reproducibility and transparency from raw data to model evaluation, meeting the **Code Institute’s CRISP-DM and Learning Outcome** standards for the Predictive Analytics project.
 
 ---
+## Model Dataset Integration Flowchart
+
+                ┌────────────────────┐
+                │   GOODBOOKS DATA   │
+                │ (cleaned features) │
+                └─────────┬──────────┘
+                          │
+              merge on `goodreads_id_clean`
+                          │
+                ┌─────────▼──────────┐
+                │   BBE DATASET       │
+                │ (rename cols to     │
+                │  prevent conflicts) │
+                └─────────┬──────────┘
+                          │
+                          ▼
+               ┌────────────────────────┐
+               │   MERGED MASTER DATA   │
+               └─────────┬──────────────┘
+                         │
+       ┌─────────────────┴───────────────────┐
+       │                                     │
+       ▼                                     ▼
+┌──────────────────────┐           ┌────────────────────────┐
+│  DATASET A:          │           │  DATASET B:             │
+│  Cross-Platform      │           │  Clean Modeling         │
+│  Validation          │           │  (No BBE behavioral     │
+│  • keeps BBE         │           │   features)             │
+│    behavioral data   │           │  • avoids leakage       │
+│  • used only for     │           │  • supports cold start  │
+│    insight studies   │           │    scenarios            │
+└──────────────────────┘           └────────────────────────┘
+
+---
 
 ## Dashboard Design (Streamlit MVP)
 
@@ -212,8 +247,16 @@ Estimate the potential uplift in engagement and retention achievable through a p
 - [Pandas Documentation](https://pandas.pydata.org/docs/): datetime, combine_first,
 - [NumPy](https://numpy.org/doc/stable/): exponential, logarithm, arange
 - [DateUtils Documentation](https://dateutil.readthedocs.io/): for advanced date parsing.
+- [TQDM Documentation](https://tqdm.github.io/): for progress bars in loops.
+- [Requests Documentation](https://requests.readthedocs.io/en/latest/): for making HTTP requests.
+- [Pandas Merging](https://pandas.pydata.org/docs/user_guide/merging.html): for combining DataFrames.
+- [Scikit-Learn Documentation](https://scikit-learn.org/stable/documentation.html): for machine learning algorithms and evaluation metrics.
 - [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/): for consistent commit messages.
 - On Gaussian Distribution: [Free Code Camp](https://www.freecodecamp.org/news/how-to-explain-data-using-gaussian-distribution-and-summary-statistics-with-python/), [Quantinsti](https://blog.quantinsti.com/gaussian-distribution/), [GeeksForGeeks Machine Learning](https://www.geeksforgeeks.org/machine-learning/gaussian-distribution-in-machine-learning/), [eeksForGeeks Python](https://www.geeksforgeeks.org/python/python-normal-distribution-in-statistics/), [PennState College](https://online.stat.psu.edu/stat857/node/77/)
 - On Binnin Data: [GeeksForGeeks](https://www.geeksforgeeks.org/numpy/binning-data-in-python-with-scipy-numpy/)
+- [Sentence Transformers](https://www.sbert.net/docs/quickstart.html): for generating text embeddings.
+- [Pytest Documentation](https://docs.pytest.org/en/7.3.x/): for testing framework in Python.
+- [geeksforgeeks.org: Combinations](https://www.geeksforgeeks.org/python/itertools-combinations-module-python-print-possible-combinations/): for generating combinations.
+- ChatGPT: to refine and correct grammar textual explanations in README.md and notebooks.
 - NotebookLM: Learning guide on data cleaning, to help me find next steps without providing any code.
 
