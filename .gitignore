@@ -20,14 +20,14 @@ __pycache__/
 test.ipynb
 note.txt
 
-# ignore all CSVs 
+# ignore all CSVs, JSONs, and PKLs in data and outputs directories
 data/raw/*.csv
 data/raw/*.json
 data/processed/*.csv
 data/cleaned/**/*.csv
 data/interim/**/*.pkl
 data/interim/**/*.csv
-
+outputs/datasets/**/*.csv
 # except sample CSVs
 !data/raw/*_sample.csv
 
