@@ -15,12 +15,27 @@ data/cleaned/merge/*.csv
 data/interim/goodbooks/*.csv
 outputs/datasets/cleaned/*.csv
 outputs/datasets/modeling/*.csv
+outputs/datasets/analysis/*.csv
 src/cleaning/utils/*.py
 src/mappings/*.json
 notebooks/*.ipynb
 tests/*.py
 outputs/eda_plots/*.png
-outputs/eda_plots/*.csv
+# Keep specific plots used by Streamlit
+!outputs/eda_plots/genre_comparison.png
+!outputs/eda_plots/author_comparison.png
+!outputs/eda_plots/publisher_comparison.png
+!outputs/eda_plots/rating_distribution_comparison.png
+!outputs/eda_plots/publication_year_distribution_comparison.png
+!outputs/eda_plots/genre_sample_size_effect.png
+!outputs/eda_plots/publisher_sample_size_effect.png
+!outputs/eda_plots/book_sample_size_effect.png
+!outputs/eda_plots/supply_genre_sample_size_effect.png
+!outputs/eda_plots/user_activity_distribution_raw.png
+!outputs/eda_plots/user_activity_distribution_log.png
+!outputs/eda_plots/user_genre_preference_analysis.png
+!outputs/eda_plots/genre_engagement_vs_volume_scatter.png
+
 # Git and version control
 .git
 .gitignore
