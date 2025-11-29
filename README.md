@@ -284,6 +284,41 @@ jupyter notebook
 
 > Do not use requirements.txt for local installs. It is intentionally minimal for Heroku deployment.
 
+## Hugging Face Integration
+
+This project uses [Hugging Face](https://huggingface.co/) to store and share datasets and visualizations. Hugging Face provides a secure, cloud-based platform for hosting files, collaborating, and accessing machine learning resources.
+
+### 1. Create a Hugging Face Account
+
+Go to [https://huggingface.co/join](https://huggingface.co/join) and sign up with your email or GitHub account.
+
+### 2. Create a Dataset Repository
+
+- Visit [https://huggingface.co/datasets](https://huggingface.co/datasets).
+- Click **"New dataset"**.
+- Enter a name (e.g. `bookwise-analytics-ml`).
+- Choose **Public** or **Private**. For this project, we choose **Public**.
+- Click **Create**.
+
+### 3. Create an Access Token
+
+- Go to [https://huggingface.co/settings/tokens](https://huggingface.co/settings/tokens).
+- Click **"New token"**.
+- Name your token (e.g., `bookwise-upload`).
+- Select **Write** permission for your personal repositories. (It will automatically have read access.)
+- Click **Create** and copy the token.
+
+**Required permission:**  
+- Write access to contents/settings of all repos under your personal namespace.
+
+### 4. Add Your Token to Your Environment
+
+Save your token in a `.env` file:
+
+```
+HUGGINGFACE_TOKEN=hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
 ## Heroku Deployment
 
 The Streamlit app on Heroku uses the minimal runtime libs defined in requirements.txt and the Procfile.

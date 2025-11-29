@@ -13,6 +13,7 @@ dependencies = [
     "python-dateutil>=2.8.0",
     "requests==2.32.5",
     "tqdm>=4.65.0",
+    "huggingface-hub>=0.20.0",
 ]
 
 [project.optional-dependencies]

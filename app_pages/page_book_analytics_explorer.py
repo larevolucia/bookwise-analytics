@@ -4,20 +4,11 @@ import pandas as pd
 import streamlit as st
 
 
-def _safe_image(path: Path, caption: str = ""):
-    if path.exists():
-        st.image(str(path), caption=caption)
-    else:
-        # fallback for plots that may have been saved in notebook root
-        alt = (
-            Path("rating_distribution_comparison.png")
-            if path.name == "rating_distribution_comparison.png"
-            else None
-        )
-        if alt and alt.exists():
-            st.image(str(alt), caption=caption)
-        else:
-            st.warning(f"Missing plot: {path}")
+def _safe_image(filename: str, caption: str = ""):
+    # Use Hugging Face URL for images (.webp format)
+    hf_base_url = " https://huggingface.co/datasets/revolucia/"
+    images_url = f"{hf_base_url}bookwise-analytics-ml/resolve/main/eda_plots/"
+    st.image(f"{images_url}{filename}", caption=caption)
 
 
 def _safe_csv(path: Path, caption: str = "") -> None:
@@ -51,30 +42,28 @@ def page_book_analytics_explorer_body():
 
     st.write("---")
 
-    plots_dir = Path("outputs/eda_plots")
-
     with st.expander(
         "Catalog Comparisons (genres, authors, publishers, ratings, years)",
         expanded=True,
     ):
         _safe_image(
-            plots_dir / "genre_comparison.png",
+            "genre_comparison.webp",
             caption="Genre distribution: Internal vs Supply",
         )
         _safe_image(
-            plots_dir / "author_comparison.png",
+            "author_comparison.webp",
             caption="Top authors presence comparison",
         )
         _safe_image(
-            plots_dir / "publisher_comparison.png",
+            "publisher_comparison.webp",
             caption="Major vs Indie publisher comparison",
         )
         _safe_image(
-            plots_dir / "rating_distribution_comparison.png",
+            "rating_distribution_comparison.webp",
             caption="Rating distribution comparison",
         )
         _safe_image(
-            plots_dir / "publication_year_distribution_comparison.png",
+            "publication_year_distribution_comparison.webp",
             caption="Publication year distribution comparison",
         )
         st.caption(
@@ -85,19 +74,19 @@ def page_book_analytics_explorer_body():
 
     with st.expander("Sample-Size Effects (diagnostics)", expanded=False):
         _safe_image(
-            plots_dir / "genre_sample_size_effect.png",
+            "genre_sample_size_effect.webp",
             caption="Genre rating vs volume (Internal)",
         )
         _safe_image(
-            plots_dir / "publisher_sample_size_effect.png",
+            "publisher_sample_size_effect.webp",
             caption="Publisher rating vs volume (Internal)",
         )
         _safe_image(
-            plots_dir / "book_sample_size_effect.png",
+            "book_sample_size_effect.webp",
             caption="Book rating vs number of ratings (Internal)",
         )
         _safe_image(
-            plots_dir / "supply_genre_sample_size_effect.png",
+            "supply_genre_sample_size_effect.webp",
             caption="Genre rating vs volume (Supply)",
         )
         st.caption(
@@ -111,19 +100,19 @@ def page_book_analytics_explorer_body():
         expanded=False,
     ):
         _safe_image(
-            plots_dir / "user_activity_distribution_raw.png",
+            "user_activity_distribution_raw.webp",
             caption="User activity distribution (raw)",
         )
         _safe_image(
-            plots_dir / "user_activity_distribution_log.png",
+            "user_activity_distribution_log.webp",
             caption="User activity distribution (log)",
         )
         _safe_image(
-            plots_dir / "user_genre_preference_analysis.png",
+            "user_genre_preference_analysis.webp",
             caption="User genre preference & diversity dashboard",
         )
         _safe_image(
-            plots_dir / "genre_engagement_vs_volume_scatter.png",
+            "genre_engagement_vs_volume_scatter.webp",
             caption="Genre engagement vs catalog volume",
         )
         st.caption(
