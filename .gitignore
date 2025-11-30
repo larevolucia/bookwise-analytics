@@ -24,7 +24,7 @@ note.txt
 data/raw/*.csv
 data/raw/*.json
 data/processed/*.csv
-data/cleaned/**/*.csv
+data/enriched/**/*.csv
 data/interim/**/*.pkl
 data/interim/**/*.csv
 outputs/datasets/**/*.csv
