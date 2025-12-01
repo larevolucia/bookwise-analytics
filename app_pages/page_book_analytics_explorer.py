@@ -1,24 +1,73 @@
 """ Book Analytics Explorer Page Body """
-from pathlib import Path  # stdlib first (pylint C0411)
 import pandas as pd
 import streamlit as st
+import numpy as np
 
 
 def _safe_image(filename: str, caption: str = ""):
     # Use Hugging Face URL for images (.webp format)
     hf_base_url = "https://huggingface.co/datasets/revolucia/"
-    images_url = f"{hf_base_url}bookwise-analytics-ml/resolve/main/eda_plots/"
+    images_url = (
+        f"{hf_base_url}bookwise-analytics-ml/resolve/main/eda_plots/"
+    )
     st.image(f"{images_url}{filename}", caption=caption)
 
 
-def _safe_csv(path: Path, caption: str = "") -> None:
-    if path.exists():
-        df = pd.read_csv(path)
+def _safe_hf_csv(
+    filename: str,
+    caption: str = "",
+    subfolder: str = "datasets"
+):
+    """
+    Load CSV directly from Hugging Face Hub from
+    either 'corr_matrix' or 'datasets' subfolder.
+    subfolder: "corr_matrix" or "datasets"
+    """
+    hf_base_url = "https://huggingface.co/datasets/revolucia/"
+    csv_url = (
+        f"{hf_base_url}bookwise-analytics-ml/resolve/main/"
+        f"{subfolder}/{filename}"
+    )
+    try:
+        df = pd.read_csv(csv_url)
         st.dataframe(df, use_container_width=True)
         if caption:
             st.caption(caption)
-    else:
-        st.warning(f"Missing dataset: {path}")
+    except (pd.errors.EmptyDataError, pd.errors.ParserError, OSError) as exc:
+        st.warning(
+            f"Could not load: "
+            f"{filename} from Hugging Face Hub ({subfolder}).\n{exc}"
+        )
+
+
+def _safe_hf_csv_heatmap(
+    filename: str,
+    caption: str = "",
+    subfolder: str = "corr_matrix"
+):
+    """
+    Load CSV from Hugging Face Hub and display as a colored heatmap table.
+    """
+
+    hf_base_url = "https://huggingface.co/datasets/revolucia/"
+    csv_url = (
+        f"{hf_base_url}bookwise-analytics-ml/resolve/main/"
+        f"{subfolder}/{filename}"
+    )
+    try:
+        df = pd.read_csv(csv_url, index_col=0)
+        # Only color numeric columns
+        numeric_df = df.select_dtypes(include=np.number)
+        styled = numeric_df.style.background_gradient(
+            cmap="coolwarm", axis=None
+        ).format("{:.2f}")
+        st.write(f"**{caption}**")
+        st.dataframe(styled, use_container_width=True)
+    except (pd.errors.EmptyDataError, pd.errors.ParserError, OSError) as exc:
+        st.warning(
+            f"Could not load: "
+            f"{filename} from Hugging Face Hub ({subfolder}).\n{exc}"
+        )
 
 
 def page_book_analytics_explorer_body():
@@ -33,7 +82,7 @@ def page_book_analytics_explorer_body():
     st.info(
         "**Business Requirement 1: Engagement Drivers**\n\n"
         "This page helps identify which book and genre features "
-        " correlate with higher engagement.\n"
+        "correlate with higher engagement.\n"
         "Explore correlations, distributions, and trends in "
         "the book catalog data.\n\n"
         "**Success Indicator**: "
@@ -41,6 +90,48 @@ def page_book_analytics_explorer_body():
     )
 
     st.write("---")
+    st.write("Correlation Matrices")
+    
+    st.markdown(
+        "#### Correlation Analysis Summary\n"
+        "The correlation matrices above show how internal, external, "
+        "and metadata features relate to key engagement signals. "
+        "Analysis reveals that `popularity_score` consistently demonstrates "
+        "stronger and broader correlations with predictive features "
+        "compared to `gb_rating_clean`. While average ratings "
+        "(`gb_rating_clean`) are weakly associated with most metadata and "
+        "external signals,`popularity_score` captures a more comprehensive "
+        "picture of book success, reflecting both user engagement and "
+        "visibility. As a composite metric, it is less affected by "
+        "sample-size bias and rating inflation, making it a more robust and "
+        "informative target for downstream modeling and business decisions."
+    )
+
+    _safe_hf_csv_heatmap(
+        "internal_corr_matrix.csv",
+        caption="Internal GB Features Correlation Matrix"
+    )
+    _safe_hf_csv_heatmap(
+        "external_corr_matrix.csv",
+        caption="External Features Correlation Matrix"
+    )
+    _safe_hf_csv_heatmap(
+        "metadata_corr_matrix.csv",
+        caption="Metadata Features Correlation Matrix"
+    )
+
+    st.write("---")
+
+    st.markdown(
+        "#### Catalog Comparison Visualizations\n"
+        "The images below compare catalog characteristics such as genres, "
+        "authors, publishers, ratings, and publication years. "
+        "These visualizations highlight differences between the internal "
+        "catalog and the broader supply, showing trends in genre distribution,"
+        " author prominence, publisher types, and rating patterns. They "
+        "provide context for understanding engagement and diversity "
+        "in the dataset."
+    )
 
     with st.expander(
         "Catalog Comparisons (genres, authors, publishers, ratings, years)",
@@ -123,23 +214,6 @@ def page_book_analytics_explorer_body():
 
     st.write("---")
     st.write("Data tables")
-
-    # # will be replaced by modeling artifacts later
-    # col1, col2 = st.columns(2)
-
-    # with col1:
-    #     # Placeholder: sample of the model table after feature engineering
-    #     _safe_csv(
-    #         Path("outputs/datasets/modeling/model_features_sample.csv"),
-    #         caption="Model features sample (post feature engineering)",
-    #     )
-
-    # with col2:
-    #     # Placeholder: user behavior cluster dataset
-    #     _safe_csv(
-    #         Path("outputs/datasets/modeling/user_behavior_clusters.csv"),
-    #         caption="User behavior clusters (segmentation output)",
-    #     )
 
     st.info(
         "Next: Surface Bayesian/weighted ratings, "

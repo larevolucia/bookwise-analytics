@@ -28,6 +28,7 @@ data/enriched/**/*.csv
 data/interim/**/*.pkl
 data/interim/**/*.csv
 outputs/datasets/**/*.csv
+outputs/datasets/**/*.csv
 outputs/eda_plots/*.png
 # except sample CSVs
 !data/raw/*_sample.csv
