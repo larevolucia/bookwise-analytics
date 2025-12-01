@@ -91,7 +91,7 @@ def page_book_analytics_explorer_body():
 
     st.write("---")
     st.write("Correlation Matrices")
-    
+
     st.markdown(
         "#### Correlation Analysis Summary\n"
         "The correlation matrices above show how internal, external, "
