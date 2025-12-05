@@ -1,0 +1,4 @@
+,gb_rating_clean,gb_numRatings_log,work_text_reviews_log
+gb_rating_clean,1.0,0.06622186323073652,-0.14020492198260417
+gb_numRatings_log,0.06622186323073652,1.0,0.7174301115071536
+work_text_reviews_log,-0.14020492198260417,0.7174301115071536,1.0
