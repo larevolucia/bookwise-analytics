@@ -21,6 +21,7 @@ src/mappings/*.json
 notebooks/*.ipynb
 tests/*.py
 outputs/eda_plots/*.png
+outputs/models/randomforest/1/*.pkl
 # Keep specific plots used by Streamlit
 !outputs/eda_plots/genre_comparison.png
 !outputs/eda_plots/author_comparison.png
@@ -83,3 +84,4 @@ dist/
 # Other
 .DS_Store
 Thumbs.db
+
