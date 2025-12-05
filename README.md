@@ -44,7 +44,7 @@ This project aims to move from intuition-based book selection to a **predictive 
 
 | ID       | Business Requirement                                                                      | Success Indicator                                  | Dataset(s)             |
 | -------- | ----------------------------------------------------------------------------------------- | -------------------------------------------------- | ---------------------- |
-| **BR-1** | Identify which book and genre features correlate with higher engagement.                  | Correlation ≥ 0.4 between features and engagement. | BBE            |
+| **BR-1** | Identify which metadata and external features correlate with higher engagement.                  | Correlation ≥ 0.4 between features and engagement. | BBE            |
 | **BR-2** | Predict which titles are most likely to achieve high engagement based on historical data. | Model RMSE < 1.0 or R² > 0.7.                      | BBE, Goodbooks |
 | **BR-3** | Estimate potential retention uplift from algorithmic vs manual (editorial) selection.     | Simulated uplift ≥ 10%.                            | BBE, Goodbooks         |
 | **BR-4** | Maintain diversity and fairness in recommendations across genres.                         | Shannon Entropy ≥ baseline (0.7).                  | BBE, Goodbooks                    |
@@ -64,7 +64,7 @@ This project aims to move from intuition-based book selection to a **predictive 
 
 ### Expected Business Impact
 
-* **Personalization:** Users are more likely to spend credits and remain active when recommendations align with preferences.
+* **Recommendation:** Users are more likely to spend credits and remain active when recommendations align with predicted performance.
 * **Retention:** Data-driven selection is projected to reduce churn by highlighting titles with higher predicted satisfaction.
 * **Efficiency:** Editors can focus on curating top-performing genres or niche categories identified by analytics.
 * **Scalability:** The recommendation model can be extended to new releases without manual review.
@@ -82,7 +82,8 @@ This project integrates multiple **publicly available sources** to emulate both 
 | **Best Books Ever (BBE)**         | [Zenodo / GitHub](https://github.com/scostap/goodreads_bbe_dataset)          | Catalog-level metadata: ratings, votes, bbeScore     |
 | **Goodbooks-10k**                 | [GitHub – zygmuntz/goodbooks-10k](https://github.com/zygmuntz/goodbooks-10k) | User-behavior dataset: 6 M ratings from 53 K users
 | **Overlap (BBE ∩ Goodbooks)**     | Derived (8 K books; ≈ 80 % of BBE, 15 % of Goodbooks)                        | Enables metadata linking  |
-| *(tentative)* **Google Books API** | [Google Books API](https://developers.google.com/books)                      | Fetches commercial or descriptive metadata.             |
+| **Open Library API** | [Open Library API](https://openlibrary.org/developers/api)                      | Fetches commercial or descriptive metadata.             |
+| **Google Books API** | [Google Books API](https://developers.google.com/books)                      | Fetches commercial or descriptive metadata.             |
 
 > **Why these sources:** These datasets together capture book quality (Goodreads ratings), user behavior (Goodbooks), and market context (Google API), forming a realistic simulation environment.
 
@@ -372,6 +373,7 @@ heroku logs --tail
 - [Sentence Transformers](https://www.sbert.net/docs/quickstart.html): for generating text embeddings.
 - [Pytest Documentation](https://docs.pytest.org/en/7.3.x/): for testing framework in Python.
 - [geeksforgeeks.org: Combinations](https://www.geeksforgeeks.org/python/itertools-combinations-module-python-print-possible-combinations/): for generating combinations.
+- [Scikit-learn](https://scikit-learn.org/): for ML models and pipelines.
 - ChatGPT: to refine and correct grammar textual explanations in README.md and notebooks.
 - NotebookLM: Learning guide on data cleaning, to help me find next steps without providing any code.
 
