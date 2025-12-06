@@ -32,6 +32,8 @@ outputs/datasets/**/*.csv
 outputs/eda_plots/*.png
 # except sample CSVs
 !data/raw/*_sample.csv
+!outputs/datasets/modeling/**/*.csv
+!outputs/datasets/analysis/supply_catalog_final_features.csv
 
 # OS
 .DS_Store
