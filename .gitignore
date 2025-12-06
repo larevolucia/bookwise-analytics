@@ -29,11 +29,11 @@ data/interim/**/*.pkl
 data/interim/**/*.csv
 outputs/datasets/**/*.csv
 outputs/datasets/**/*.csv
+outputs/datasets/modeling/**/*.csv
 outputs/eda_plots/*.png
 # except sample CSVs
 !data/raw/*_sample.csv
-!outputs/datasets/modeling/**/*.csv
-!outputs/datasets/analysis/supply_catalog_final_features.csv
+outputs/models/**/*.pkl
 
 # OS
 .DS_Store
