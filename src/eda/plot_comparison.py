@@ -96,8 +96,8 @@ def plot_author_comparison(internal_df, supply_df, top_n=30):
         Number of top authors to display
     """
     # Count authors
-    internal_authors = internal_df['author_string'].dropna()
-    supply_authors = supply_df['author_string'].dropna()
+    internal_authors = internal_df['author_clean'].dropna()
+    supply_authors = supply_df['author_clean'].dropna()
 
     # Get total counts for percentage calculation
     internal_total = len(internal_authors)
