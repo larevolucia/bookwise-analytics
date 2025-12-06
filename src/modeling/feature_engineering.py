@@ -1,5 +1,6 @@
 """ Feature engineering functions for modeling datasets. """
 import numpy as np
+import pandas as pd
 
 try:
     from sentence_transformers import SentenceTransformer
@@ -113,6 +114,10 @@ def fe_engineering(
         print(f"Completed author-based features"
               f" using top {top_n_authors} authors.")
 
+        # Add primary_author feature
+        df['primary_author'] = df[author_col].apply(extract_primary_author)
+        print("Extracted primary_author feature.")
+
     # Publisher popularity proxy
     if publisher_col in df.columns:
         print("Computing publisher-based features...")
@@ -172,3 +177,14 @@ def fe_engineering(
 
     print("Feature engineering complete.\n")
     return df
+
+
+def extract_primary_author(author_string):
+    """Extract the first author from a comma-separated author string."""
+    if pd.isna(author_string):
+        return None
+    # Ensure it is str
+    author_string = str(author_string)
+    # Split by comma and return first element
+    primary = author_string.split(',', maxsplit=1)[0].strip()
+    return primary if primary else None
