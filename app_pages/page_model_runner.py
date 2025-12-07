@@ -6,8 +6,7 @@ import joblib
 import requests
 from sklearn.exceptions import NotFittedError
 from src.analysis.analysis import (
-    get_top_predicted_books,
-    calculate_genre_entropy
+    get_top_predicted_books
 )
 
 HF_BASE_URL = "https://huggingface.co/datasets/revolucia/"
@@ -119,9 +118,6 @@ def page_model_runner_body():
         )
         st.write("### Top 15 Recommended Titles")
         st.dataframe(top_books)
-
-        genre_entropy = calculate_genre_entropy(top_books["genres_clean"])
-        st.write(f"**Genre Entropy (Top 15):** {genre_entropy:.3f}")
 
     except (FileNotFoundError, pd.errors.ParserError, OSError) as e:
         st.error(f"Could not compute top predicted books: {e}")

@@ -1,0 +1,2 @@
+Internal Catalog Genre Entropy: 4.745
+Supply Catalog Genre Entropy: 4.930
