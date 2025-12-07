@@ -1,8 +1,7 @@
-
 # Bookwise Analytics: Book Subscription Optimization
 
 CRISP-DM steps docummented at: [Project board](https://github.com/users/larevolucia/projects/15/views/1)
-Live App: [Streamlit Dashboard](https://bookwise-analyics-1d891f772a24.herokuapp.com/)
+Live App: [Streamlit Dashboard](https://bookwise-analytics-1d891f772a24.herokuapp.com/)
 
 ## Business Understanding
 
@@ -47,17 +46,17 @@ This project aims to move from intuition-based book selection to a **predictive 
 | **BR-1** | Identify which metadata and external features correlate with higher engagement.                  | Correlation ≥ 0.4 between features and engagement. | BBE            |
 | **BR-2** | Predict which titles are most likely to achieve high engagement based on historical data. | Model RMSE < 1.0 or R² > 0.7.                      | BBE, Goodbooks |
 | **BR-3** | Estimate potential retention uplift from algorithmic vs manual (editorial) selection.     | Simulated uplift ≥ 10%.                            | BBE, Goodbooks         |
-| **BR-4** | Maintain diversity and fairness in recommendations across genres.                         | Shannon Entropy ≥ baseline (0.7).                  | BBE, Goodbooks                    |
+| **BR-4** | Maintain diversity and fairness in recommendations across genres.                         | Shannon Entropy ≥ editorial baseline                 | BBE, Goodbooks                    |
 
 ---
 
 ### Hypotheses
 
 | ID     | Hypothesis                                                                                                      | Validation Method                                                     | Expected Outcome                                                              |
-| ------ | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| ------ | --------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | **H1** | Books with high cross-platform ratings (>4.0) and multi-genre tags achieve higher engagement.                   | Correlation and multiple regression.                                  | Positive correlation (r > 0.4).                                               |
 | **H2** | Historical rating and review patterns can predict engagement with ~80% accuracy.                                | Regression or hybrid recommender (XGBoost / collaborative filtering). | Model achieves RMSE < 1.0 or R² > 0.7.                                        |
-| **H3** | Recent publications yield higher satisfaction.                               | Correlation and time-series analysis.                                 | Negative correlation between book publication date and satisfaction. |
+| **H3** | Recent publications yield higher satisfaction. | Feature importance analysis and correlation with publication decade. | Publication recency (e.g., 2010s) appears among top features, but external engagement metrics are stronger predictors; recency has moderate impact. |
 | **H4** | Algorithmic selection based on predicted engagement increases overall engagement by at least 10% compared to editorial or random selection. | Simulated uplift modeling using a logistic engagement–retention proxy. | ≥10% uplift in simulated engagement (proxy for retention). |
 
 ---
@@ -163,11 +162,12 @@ Estimate the potential uplift in engagement and retention achievable through a p
 
 ```
 /notebooks
-├── 01_Data_Collection.ipynb      # initial exploration and completeness check of all datasets
-├── 01_Data_Cleaning.ipynb        # regex cleaning, NaN handling, and type conversions
-├── 02_Data_Imputation.ipynb      # external API enrichment and dictionary-based caching
-├── 03_Feature_Engineering.ipynb  # feature creation (engagement_score, recency, popularity)
-└── 04_Modeling.ipynb             # clustering and recommendation model development
+├── 01_Data_Collection.ipynb        # initial exploration and completeness check of all datasets
+├── 02_Data_Cleaning.ipynb          # regex cleaning, NaN handling, and type conversions
+├── 03_Data_Imputation.ipynb        # external API enrichment and dictionary-based caching
+├── 04_Exploratory_Data_Analysis.ipynb  # EDA: correlations, trends, and feature relationships
+├── 05_Feature_Engineering.ipynb    # feature creation (engagement_score, recency, popularity)
+├── 06_Modeling.ipynb               # regression, clustering, and recommendation model development
 ```
 
 > Each notebook represents a phase of the **CRISP-DM** process:
@@ -175,6 +175,7 @@ Estimate the potential uplift in engagement and retention achievable through a p
 > * **Data Collection (LO7)** – explores and audits dataset quality and structure.
 > * **Data Cleaning (LO7.2)** – standardizes and validates fields for analytical use.
 > * **Data Imputation (LO7.1)** – retrieves missing values via APIs while ensuring reproducibility.
+> * **Exploratory Data Analysis (LO4)** – investigates feature relationships, correlations, and trends.
 > * **Feature Engineering (LO4 & LO5)** – generates predictive features tied to business hypotheses.
 > * **Modeling (LO5)** – builds and evaluates machine learning pipelines to meet business KPIs.
 >
@@ -221,10 +222,9 @@ Estimate the potential uplift in engagement and retention achievable through a p
 | Page                                                              | Purpose                                                                                              | Key Visuals & Elements                                                                                                     |
 | ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | **1. Executive Summary**                                          | Show KPIs (RMSE, R², engagement score averages).                                                     | Metric cards + bar chart of model vs baseline.     |
-| **2. Book Analytics Explorer**                                    | Explore correlations and trends.                                                                     | Interactive Plotly scatter + heatmap filters. |
-| **3. Recommendation Comparison** | Compare Model / Editorial / Random strategies. | Side-by-side tables + bar chart of predicted scores.  |
-| **4. Insights & Diversity**                                       | Show genre distribution and fairness.    | Pie / bar charts + entropy indicator + interpretation.   |
-
+| **2. Book Analytics Explorer**                                    | Explore correlations, trends, and diversity metrics.                                                 |  Plotly scatter + heatmap filters + genre diversity visualizations. |
+| **3. Recommendation Comparison**                                  | Compare Model / Editorial / Random strategies.                                                       | Side-by-side tables + bar chart of predicted scores.  |
+| **4. Model Runner: Top 10 Books**                                 | Run the trained model on supply data and show top 10 highly rated books.                             | Table of top 10 books by predicted engagement score. |
 
 ---
 
@@ -239,6 +239,40 @@ Estimate the potential uplift in engagement and retention achievable through a p
 | **Deployment** | Streamlit Cloud or Heroku with static data + saved model.  | Add caching and optimization.      |
 
 ---
+# Quick Start
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/larevolucia/bookwise-analytics.git
+   cd bookwise-analytics
+   ```
+
+2. **Create a `.env` file** in the project root with your Google API Key and Hugging Face tokens:
+   ```
+   GOOGLE_BOOKS_API_KEY=your_google_books_api_key
+   HUGGINGFACE_TOKEN=hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+   HUGGINGFACE_MODEL_TOKEN=hf_yyyyyyyyyyyyyyyyyyyyyyyyyyyy
+   ```
+
+3. **Install dependencies** (see Local Development section).
+
+4. **Datasets and models** 
+The original datasets are large and not included in the repo, however, they are open-source and can be downloaded from their respective sources (links in Datasets section).
+
+You can run the Jupyter notebooks to fetch original datasets and processed datasets. 
+
+[Datasets and Plots](https://huggingface.co/datasets/revolucia/bookwise-analytics-ml/tree/main)
+[Deployed Models](https://huggingface.co/revolucia/popularity-score-model/tree/main)
+
+5. **Run the Streamlit app locally:**
+   ```bash
+   streamlit run app.py
+   ```
+
+6. **Deploy to Heroku:**  
+   Follow the steps in the Heroku Deployment section.  
+   Make sure to set both Hugging Face tokens as Heroku config vars.
+  
 ## Local Development
 
 To work locally (notebooks, utilities, ML), install via the project’s `pyproject.toml`. Avoid requirements.txt; it is only for Heroku.
@@ -287,38 +321,19 @@ jupyter notebook
 
 ## Hugging Face Integration
 
-This project uses [Hugging Face](https://huggingface.co/) to store and share datasets and visualizations. Hugging Face provides a secure, cloud-based platform for hosting files, collaborating, and accessing machine learning resources.
+This project uses **two Hugging Face repositories**:
 
-### 1. Create a Hugging Face Account
+- `bookwise-analytics-ml`: stores datasets and EDA plots.
+- `popularity-score-model`: stores trained model artifacts.
 
-Go to [https://huggingface.co/join](https://huggingface.co/join) and sign up with your email or GitHub account.
-
-### 2. Create a Dataset Repository
-
-- Visit [https://huggingface.co/datasets](https://huggingface.co/datasets).
-- Click **"New dataset"**.
-- Enter a name (e.g. `bookwise-analytics-ml`).
-- Choose **Public** or **Private**. For this project, we choose **Public**.
-- Click **Create**.
-
-### 3. Create an Access Token
-
-- Go to [https://huggingface.co/settings/tokens](https://huggingface.co/settings/tokens).
-- Click **"New token"**.
-- Name your token (e.g., `bookwise-upload`).
-- Select **Write** permission for your personal repositories. (It will automatically have read access.)
-- Click **Create** and copy the token.
-
-**Required permission:**  
-- Write access to contents/settings of all repos under your personal namespace.
-
-### 4. Add Your Token to Your Environment
-
-Save your token in a `.env` file:
-
-```
-HUGGINGFACE_TOKEN=hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-```
+**Important:**  
+- You must create a separate access token for each repository.
+- Save both tokens in your `.env` file:
+  ```
+  HUGGINGFACE_TOKEN=hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  HUGGINGFACE_MODEL_TOKEN=hf_yyyyyyyyyyyyyyyyyyyyyyyyyyyy
+  ```
+- Use the correct token when uploading or downloading files for each repo.
 
 ## Heroku Deployment
 
@@ -356,7 +371,7 @@ heroku logs --tail
 
 
 ---
-## References
+# References
 
 - [Regex101](https://regex101.com/): Online regex tester and debugger.
 - [Text Cleaning in Python](https://pbpython.com/text-cleaning.html): A guide on cleaning text data using Python.
