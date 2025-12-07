@@ -94,7 +94,7 @@ def page_book_analytics_explorer_body():
 
     st.markdown(
         "#### Correlation Analysis Summary\n"
-        "The correlation matrices above show how internal, external, "
+        "The correlation matrices below show how internal, external, "
         "and metadata features relate to key engagement signals. "
         "Analysis reveals that `popularity_score` consistently demonstrates "
         "stronger and broader correlations with predictive features "
@@ -121,26 +121,40 @@ def page_book_analytics_explorer_body():
     )
 
     st.write("---")
+    st.markdown(
+        "#### Engagement Driver Summary\n"
+        "**Which features are most strongly correlated with engagement?**\n\n"
+        "- Only **external signals** (such as `external_numratings_log`, "
+        "`external_votes_log`, and `external_likedpct`) have correlation "
+        "coefficients ≥ 0.4 with the engagement metric (`popularity_score`).\n"
+        "- No metadata features reach this threshold; the closest is "
+        "`has_award_final` (correlation = 0.34 with `popularity_score`).\n"
+        "- This highlights the importance of external popularity and social "
+        "proof signals in predicting engagement, while metadata features have "
+        "weaker direct associations.\n"
+        "\n"
+        "**Success Indicator:**\n"
+        "- Requirement met: External features exceed the 0.4 correlation "
+        "threshold with engagement.\n"
+        "- See color-coded matrices above for details."
+    )
 
+    st.write("---")
     st.markdown(
         "#### Catalog Comparison Visualizations\n"
-        "The images below compare catalog characteristics such as genres, "
-        "authors, publishers, ratings, and publication years. "
+        "The images below compare catalog characteristics such as authors, "
+        "publishers, ratings, and publication years. "
         "These visualizations highlight differences between the internal "
-        "catalog and the broader supply, showing trends in genre distribution,"
-        " author prominence, publisher types, and rating patterns. They "
-        "provide context for understanding engagement and diversity "
+        "catalog and the broader supply, showing trends in author prominence, "
+        "publisher types, and rating patterns. They "
+        "provide context for understanding engagement "
         "in the dataset."
     )
 
     with st.expander(
-        "Catalog Comparisons (genres, authors, publishers, ratings, years)",
+        "Catalog Comparisons (authors, publishers, ratings, years)",
         expanded=True,
     ):
-        _safe_image(
-            "genre_comparison.webp",
-            caption="Genre distribution: Internal vs Supply",
-        )
         _safe_image(
             "author_comparison.webp",
             caption="Top authors presence comparison",
@@ -198,18 +212,54 @@ def page_book_analytics_explorer_body():
             "user_activity_distribution_log.webp",
             caption="User activity distribution (log)",
         )
+
+    st.write("---")
+    st.markdown(
+        "#### Genre Distribution & Diversity Metrics\n"
+        "Visualizations below show how genres are represented in the catalog "
+        "and recommendations. Shannon Entropy is used to quantify diversity "
+        "and fairness. Balanced genre representation ensures a wide range of "
+        "reading experiences and prevents overconcentration in popular genres."
+    )
+
+    with st.expander("Genre Distribution", expanded=True):
         _safe_image(
-            "user_genre_preference_analysis.webp",
-            caption="User genre preference & diversity dashboard",
-        )
-        _safe_image(
-            "genre_engagement_vs_volume_scatter.webp",
-            caption="Genre engagement vs catalog volume",
+            "genre_comparison.webp",
+            caption="Genre distribution: Internal vs Supply Catalog"
         )
         st.caption(
-            "Readers show high apparent genre diversity due to multi-tagging, "
-            "with engagement concentrated in broad genres (fiction, fantasy, "
-            "classics)."
+            "Shows the share of each genre in both the internal "
+            "and supply catalogs."
+        )
+
+    with st.expander("User Genre Preference", expanded=True):
+        _safe_image(
+            "user_genre_preference.webp",
+            caption="Top 20 Genres by User Preference"
+        )
+        st.caption(
+            "Displays the genres most preferred by users, based on average "
+            "preference score."
+        )
+
+    with st.expander("Genre Diversity Distribution", expanded=True):
+        _safe_image(
+            "user_genre_diversity_distribution.webp",
+            caption="Distribution of User Genre Diversity (Shannon Entropy)"
+        )
+        st.caption(
+            "Shows the distribution of genre diversity among users, "
+            "measured by Shannon Entropy."
+        )
+
+    with st.expander("Genre Engagement vs Catalog Volume", expanded=True):
+        _safe_image(
+            "genre_engagement_vs_volume_scatter.webp",
+            caption="Genre Engagement vs Catalog Volume"
+        )
+        st.caption(
+            "Scatter plot of user engagement (interactions) vs "
+            "number of books per genre in the catalog."
         )
 
     st.write("---")
