@@ -11,7 +11,8 @@ from src.analysis.analysis import (
 )
 
 HF_BASE_URL = "https://huggingface.co/datasets/revolucia/"
-REPO_PATH = "bookwise-analytics-ml/resolve/main/modeling_data/"
+DATASET_PATH = "bookwise-analytics-ml/resolve/main/modeling_data/"
+MODEL_PATH = "popularity-score-model/"
 
 
 def _safe_hf_csv(
@@ -41,10 +42,12 @@ def _safe_hf_csv(
 
 def _load_hf_model_pkl(filename: str, subfolder: str = "modeling_data"):
     """
-    Download and load a pickle model from Hugging Face Hub.
+    Download and load a pickle model from Hugging Face Hub (model repo).
     """
+    # Use the model repo URL, not datasets
     model_url = (
-        f"{HF_BASE_URL}bookwise-analytics-ml/resolve/main/"
+        f"https://huggingface.co/"
+        "revolucia/popularity-score-model/resolve/main/"
         f"{subfolder}/{filename}"
     )
     try:
@@ -69,13 +72,15 @@ def _load_hf_model_pkl(filename: str, subfolder: str = "modeling_data"):
 
 def page_model_runner_body():
     """
-    Run the trained model on the supply dataset
-    and show predicted engagement score for a selected book.
+    Run the trained model to help select new titles for the internal catalog.
     """
-    st.write("## Model Runner")
-    model_filename = "rf_model.pkl"
+    st.write("## Catalog Title Selector")
+    model_filename = "et_model.pkl"
 
-    st.write("Loading model and datasets from Hugging Face Hub...")
+    st.write(
+        "Load model and data from Hugging Face Hub "
+        "to support catalog selection."
+    )
     # Load data from Hugging Face Hub
     catalog_df = _safe_hf_csv(
         "supply_catalog_analysis.csv",
@@ -94,14 +99,17 @@ def page_model_runner_body():
     if model is None:
         return
 
-    st.write("## Supply Catalog Selection")
-    # Show top 15 predicted books using the analysis function
+    st.write("## Select from Supply Catalog")
+    st.write(
+        "Review top predicted books and select promising new titles for the "
+        "internal catalog."
+    )
     try:
         features_path = (
-            f"{HF_BASE_URL}{REPO_PATH}supply_catalog_final_features.csv"
+            f"{HF_BASE_URL}{DATASET_PATH}supply_catalog_final_features.csv"
         )
         catalog_path = (
-            f"{HF_BASE_URL}{REPO_PATH}supply_catalog_analysis.csv"
+            f"{HF_BASE_URL}{DATASET_PATH}supply_catalog_analysis.csv"
         )
         top_books = get_top_predicted_books(
             model=model,
@@ -109,28 +117,28 @@ def page_model_runner_body():
             catalog_path=catalog_path,
             top_n=15
         )
-        st.write("### Top 15 Predicted Books")
+        st.write("### Top 15 Recommended Titles")
         st.dataframe(top_books)
 
-        # calculate genre entropy for top predicted books
         genre_entropy = calculate_genre_entropy(top_books["genres_clean"])
         st.write(f"**Genre Entropy (Top 15):** {genre_entropy:.3f}")
 
     except (FileNotFoundError, pd.errors.ParserError, OSError) as e:
         st.error(f"Could not compute top predicted books: {e}")
 
-    st.write("### Predict Engagement for a Selected Book")
-    # Choose a book by title
+    st.write("### Predict Engagement for a Selected Title")
+    st.write(
+        "Choose a title from the entire supply catalog to see its predicted "
+        "engagement score and decide if it fits the catalog."
+    )
     book_titles = catalog_df["title_clean"].dropna().unique()
     selected_title = st.selectbox("Select a book title", book_titles)
 
-    # Find the selected book's goodreads_id_clean
     selected_row = (
         catalog_df[catalog_df["title_clean"] == selected_title].iloc[0]
     )
     selected_id = selected_row["goodreads_id_clean"]
 
-    # Get feature row for the selected book
     feature_row = features_df[features_df["goodreads_id_clean"] == selected_id]
     if feature_row.empty:
         st.error("No features found for the selected book.")
@@ -144,7 +152,6 @@ def page_model_runner_body():
         ],
         errors="ignore"
     )
-    # Predict
     try:
         predicted_score = model.predict(features)[0]
         st.write(f"**Predicted Engagement Score:** {predicted_score:.2f}")
