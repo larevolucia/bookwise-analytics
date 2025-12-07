@@ -15,6 +15,8 @@ def page_summary_body():
     model_metrics_path = os.path.join(
         "outputs",
         "models",
+        "extratree",
+        "1",
         "metrics.json"
     )
     baseline_metrics_path = os.path.join(
