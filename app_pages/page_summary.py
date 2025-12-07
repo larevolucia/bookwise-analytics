@@ -207,7 +207,7 @@ def page_summary_body():
 
     # Model Selection and Correlation Insights
     st.write("---")
-    st.write("### Model Selection & Correlation Insights")
+    st.write("### Model Selection & Insights")
 
     st.markdown(
         """
@@ -215,7 +215,7 @@ def page_summary_body():
         achieving an R² of 0.81 and RMSE of 0.94.
         - **Top predictive features:** External engagement metrics
         (`numratings_log`, `external_popularity_score`,
-        `external_bbe_ratings_5`) and publication recency (2010).
+        `external_bbe_ratings_5`).
 
         - **Correlation Insights:** Only external signals
         (such as `external_numratings_log`, `external_votes_log`, and
@@ -224,6 +224,11 @@ def page_summary_body():
         reach this threshold; the closest is `has_award_final`
         (correlation = 0.34). This highlights the importance of external
         popularity and social proof signals in predicting engagement.
+
+        - **Recency Importance:** External features dominate the top
+        predictors, but and publication recency (2010) also plays a
+        significant role, indicating that newer books tend to engage
+        members more effectively.
         """
     )
 
@@ -249,9 +254,10 @@ def page_summary_body():
 
             **H3: Recent Publications Yield Higher Satisfaction**
             * **Hypothesis**: Recent publications yield higher satisfaction.
-            * **Validation**: Correlation and time-series analysis.
-            * **Expected Outcome**: Negative correlation between publication
-               date and satisfaction.
+            * **Validation**: Feature importance analysis of publication
+            decade.
+            * **Expected Outcome**: Publication recency (e.g., 2010s) appears
+            among top features with moderate importance.
 
             **H4: Algorithmic Selection Increases Engagement**
             * **Hypothesis**: Algorithmic selection based on predicted
