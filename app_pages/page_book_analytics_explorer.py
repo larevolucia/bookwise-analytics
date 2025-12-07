@@ -86,7 +86,7 @@ def page_book_analytics_explorer_body():
         "Explore correlations, distributions, and trends in "
         "the book catalog data.\n\n"
         "**Success Indicator**: "
-        "Correlation ≥ 0.4 between features and engagement."
+        "BR-1: Correlation ≥ 0.4 between features and engagement."
     )
 
     st.write("---")

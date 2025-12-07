@@ -74,6 +74,17 @@ def page_model_runner_body():
     Run the trained model to help select new titles for the internal catalog.
     """
     st.write("## Catalog Title Selector")
+
+    st.info(
+        "**Business Requirement 1: High-Engagement Prediction**\n\n"
+        "This page displays the books from the supply catalog with the "
+        "highest predicted engagement scores. Use the search bar to look up "
+        "the predicted score for any specific book.\n\n"
+        "**Success Indicators:**\n"
+        "* Model RMSE < 1.0 or R² > 0.7."
+    )
+
+    st.write("---")
     model_filename = "et_model.pkl"
 
     st.write(

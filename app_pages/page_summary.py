@@ -248,8 +248,8 @@ def page_summary_body():
             **H2: Historical Patterns Predict Engagement**
             * **Hypothesis**: Historical rating and review patterns can predict
               engagement with ~80% accuracy.
-            * **Validation**: Regression models (Random Forest, Extra Trees, "
-            "Gradient Boosting).
+            * **Validation**: Regression models (Random Forest, Extra Trees, 
+            Gradient Boosting).
             * **Expected Outcome**: Model achieves RMSE < 1.0 or R² > 0.7.
 
             **H3: Recent Publications Yield Higher Satisfaction**

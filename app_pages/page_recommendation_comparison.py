@@ -50,8 +50,8 @@ def page_recommendation_comparison_body():
     st.write("## Recommendation Comparison")
 
     st.info(
-        "**Business Requirements 2 & 3: "
-        "High-Engagement Prediction & Uplift Estimation**\n\n"
+        "**Business Requirements 3 & 4: "
+        "Uplift Estimation & Diversity & Fairness**\n\n"
         "This page compares three recommendation strategies:\n"
         "* **Editorial Selection**: Books chosen by human curators "
         "(simulated by popularity)\n"
