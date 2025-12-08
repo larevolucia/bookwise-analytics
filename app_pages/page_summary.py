@@ -149,6 +149,22 @@ def page_summary_body():
         "behavioral analysis."
     )
 
+    # Show first 10 rows of final_features.csv from Hugging Face
+    st.write("#### Sample of Modeling Dataset (first 10 rows)")
+    csv_url = (
+        "https://huggingface.co/datasets/revolucia/bookwise-analytics-ml/"
+        "raw/main/modeling_data/final_features.csv"
+    )
+    try:
+        df_sample = pd.read_csv(csv_url, nrows=10)
+        st.dataframe(df_sample)
+    except pd.errors.ParserError as e:
+        st.warning(f"CSV parsing error: {e}")
+    except OSError as e:
+        st.warning(f"OS error: {e}")
+    except Exception as e:
+        st.warning(f"Unexpected error: {e}")
+
     # Business Requirements
     st.write("---")
     st.write("### Business Requirements")
@@ -250,7 +266,7 @@ def page_summary_body():
             **H2: Historical Patterns Predict Engagement**
             * **Hypothesis**: Historical rating and review patterns can predict
               engagement with ~80% accuracy.
-            * **Validation**: Regression models (Random Forest, Extra Trees, 
+            * **Validation**: Regression models (Random Forest, Extra Trees,
             Gradient Boosting).
             * **Expected Outcome**: Model achieves RMSE < 1.0 or R² > 0.7.
 
