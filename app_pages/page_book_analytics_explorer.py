@@ -136,6 +136,7 @@ def page_book_analytics_explorer_body():
         "**Success Indicator:**\n"
         "- Requirement met: External features exceed the 0.4 correlation "
         "threshold with engagement.\n"
+        "- Note: Book metadata show weak correlation below 0.4 threshold.\n"
         "- See color-coded matrices above for details."
     )
 
@@ -171,10 +172,10 @@ def page_book_analytics_explorer_body():
             "publication_year_distribution_comparison.webp",
             caption="Publication year distribution comparison",
         )
-        st.caption(
-            "Takeaway: Ratings cluster near 4.0; internal catalog skews "
-            "toward mainstream fantasy/fiction; supply offers broader "
-            "non-fiction and indie presence. (BR-1)"
+        st.write(
+            "Takeaway: Ratings cluster near 4.0 and internal catalog skews "
+            "toward mainstream fantasy/fiction. Supply offers broader "
+            "non-fiction and indie presence."
         )
 
     with st.expander("Sample-Size Effects (diagnostics)", expanded=False):
@@ -194,23 +195,11 @@ def page_book_analytics_explorer_body():
             "supply_genre_sample_size_effect.webp",
             caption="Genre rating vs volume (Supply)",
         )
-        st.caption(
-            "Low-volume entities inflate averages; reliability increases "
-            "with volume. Prefer Bayesian/weighted ratings and log "
-            "transforms in modeling."
-        )
-
-    with st.expander(
-        "User Behavior (activity, preferences, diversity)",
-        expanded=False,
-    ):
-        _safe_image(
-            "user_activity_distribution_raw.webp",
-            caption="User activity distribution (raw)",
-        )
-        _safe_image(
-            "user_activity_distribution_log.webp",
-            caption="User activity distribution (log)",
+        st.write(
+            "Takeaway: Low-volume entities inflate averages and reliability "
+            "increases with volume. As a result a popularity score was used "
+            "instead of ratings and log transforms where applied accross "
+            "features in modeling."
         )
 
     st.write("---")
@@ -227,9 +216,10 @@ def page_book_analytics_explorer_body():
             "genre_comparison.webp",
             caption="Genre distribution: Internal vs Supply Catalog"
         )
-        st.caption(
-            "Shows the share of each genre in both the internal "
-            "and supply catalogs."
+        st.write(
+            "Takeaway: Compares how genres are distributed between "
+            "the internal and supply catalogs, highlighting differences "
+            "in mainstream and niche representation."
         )
 
     with st.expander("User Genre Preference", expanded=True):
@@ -237,9 +227,10 @@ def page_book_analytics_explorer_body():
             "user_genre_preference.webp",
             caption="Top 20 Genres by User Preference"
         )
-        st.caption(
-            "Displays the genres most preferred by users, based on average "
-            "preference score."
+        st.write(
+            "Takeaway: User preferences are concentrated in mainstream "
+            "genres, but expanding into underrepresented genres could enhance "
+            "diversity and personalization."
         )
 
     with st.expander("Genre Diversity Distribution", expanded=True):
@@ -247,9 +238,13 @@ def page_book_analytics_explorer_body():
             "user_genre_diversity_distribution.webp",
             caption="Distribution of User Genre Diversity (Shannon Entropy)"
         )
-        st.caption(
-            "Shows the distribution of genre diversity among users, "
-            "measured by Shannon Entropy."
+        st.write(
+            """
+            Takeaway: The distribution of Shannon entropy demonstrates that
+            nearly all users exhibit very high genre diversity, which aligns
+            with thestatistical findings that 99% of users fall into the
+            highestdiversity category.
+            """
         )
 
     with st.expander("Genre Engagement vs Catalog Volume", expanded=True):
@@ -257,17 +252,13 @@ def page_book_analytics_explorer_body():
             "genre_engagement_vs_volume_scatter.webp",
             caption="Genre Engagement vs Catalog Volume"
         )
-        st.caption(
-            "Scatter plot of user engagement (interactions) vs "
-            "number of books per genre in the catalog."
+        st.write(
+            """
+            Takeaway: User engagement is highest for popular genres by volume,
+            but niche genres attract disproportionately strong interest when
+            available, reflecting both mainstream and niche reading
+            preferences.
+            """
         )
 
     st.write("---")
-    st.write("Data tables")
-
-    st.info(
-        "Next: Surface Bayesian/weighted ratings, "
-        "correlations/PPS, and model KPIs. "
-        "Tables above will show FE sample and "
-        "user cluster outputs once generated."
-    )
