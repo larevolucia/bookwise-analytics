@@ -114,6 +114,7 @@ def page_recommendation_comparison_body():
         ]]
     )
 
+    st.write("---")
     # Simulate uplift
     uplift = simulate_uplift(top_books, model_books)
 
@@ -142,5 +143,27 @@ def page_recommendation_comparison_body():
             delta=f"{model_entropy - editorial_entropy:+.2f} vs editorial",
             help="Shannon Entropy - Measures diversity. Higher is better."
         )
+
+    st.write("---")
+
+    # Explain how simulate_uplift() works
+    st.markdown(
+        """
+        **How is Simulated Uplift Calculated?**
+
+        The simulated uplift metric shows the percentage increase in the
+        average predicted engagement score when switching from editorially
+        selected books to those recommended by the predictive model.
+        It is computed by comparing the mean predicted scores for both groups,
+        helping you assess whether the model's recommendations are expected to
+        outperform traditional selections.
+
+        **How is Genre Entropy Calculated?**
+
+        Genre entropy measures the diversity of genres in a set of books using
+        Shannon entropy. A higher entropy value indicates a more diverse and
+        balanced distribution of genres among the recommended books.
+        """
+    )
 
     st.write("---")
