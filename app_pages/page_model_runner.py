@@ -85,6 +85,24 @@ def page_model_runner_body():
     )
 
     st.write("---")
+
+    st.markdown(
+        """
+        **How to interpret the predicted engagement score:**
+
+        The score is a composite metric based on the sum of z-scores
+        (standardized values) for reviews, number of ratings, and average
+        rating.
+
+        - **A score of 0** means the book is average compared to the dataset.
+        - **Positive values** indicate above-average predicted engagement
+        (more reviews, higher rating, or more ratings than typical).
+        - **Negative values** indicate below-average predicted engagement.
+        """
+    )
+
+    st.write("---")
+
     model_filename = "et_model.pkl"
 
     st.write(
