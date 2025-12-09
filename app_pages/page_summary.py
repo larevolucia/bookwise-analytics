@@ -106,6 +106,9 @@ def page_summary_body():
             * **Model-Driven Selection**: Books recommended by
                the predictive analytics algorithm based on
                historical data patterns.
+            * **Popularity Score**: A composite metric combining
+                standardized review counts, rating counts, and average
+                rating to measure a book's overall engagement and visibility.
             """
         )
 
