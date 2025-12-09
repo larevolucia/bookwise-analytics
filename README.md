@@ -237,6 +237,20 @@ Estimate the potential uplift in engagement and retention achievable through a p
 | **Visuals**    | Four Streamlit pages listed above. | Add interactive **Uplift Simulator**. |
 | **Evaluation** | RMSE / R² + genre diversity entropy.     | Feature-importance & Precision@K plots.   |
 | **Deployment** | Streamlit Cloud or Heroku with static data + saved model.  | Add caching and optimization.      |
+---
+## Key Metrics Explained
+
+**Simulated Uplift Calculation:**  
+Simulated uplift measures the percentage increase in the average predicted engagement score when switching from editorially selected books to those recommended by the predictive model. It is calculated by comparing the mean predicted scores for both groups, indicating whether model-driven recommendations are expected to outperform traditional selections.
+
+**Genre Entropy Calculation:**  
+Genre entropy quantifies the diversity of genres among recommended books using Shannon entropy. A higher entropy value reflects a more varied and balanced genre distribution, helping ensure fairness and representation across recommendations.
+
+**Popularity Score:**  
+Popularity score is a composite metric created by standardizing and summing key engagement signals such as log-transformed review counts, log-transformed rating counts, and average rating. This score captures both the visibility and engagement of a book, making it a robust target for predictive modeling.
+
+**External Popularity Score:**  
+External popularity score combines standardized external signals, such as ratings, number of ratings, votes, engagement scores, and liked percentage, from sources outside the internal catalog. By aggregating these features, it provides a holistic measure of a book's popularity and appeal in the broader market.
 
 ---
 # Quick Start
@@ -389,6 +403,11 @@ heroku logs --tail
 - [Pytest Documentation](https://docs.pytest.org/en/7.3.x/): for testing framework in Python.
 - [geeksforgeeks.org: Combinations](https://www.geeksforgeeks.org/python/itertools-combinations-module-python-print-possible-combinations/): for generating combinations.
 - [Scikit-learn](https://scikit-learn.org/): for ML models and pipelines.
+- [Displayr: Learn What Are Residuals](https://www.displayr.com/learn-what-are-residuals/)
+- [Medium: Understanding Residual Analysis in Regression](https://medium.com/@jangdaehan1/understanding-residual-analysis-in-regression-a-deep-dive-bc9ba6f3506d)
+- [GeeksForGeeks: Residual Analysis](https://www.geeksforgeeks.org/maths/residual-analysis/)
+- [Introduction to SHAP Values for Machine Learning Interpretability](https://www.datacamp.com/tutorial/introduction-to-shap-values-machine-learning-interpretability)
+- [SHAP Documentation](https://shap.readthedocs.io/en/latest/)
 - ChatGPT: to refine and correct grammar textual explanations in README.md and notebooks.
 - NotebookLM: Learning guide on data cleaning, to help me find next steps without providing any code.
 
