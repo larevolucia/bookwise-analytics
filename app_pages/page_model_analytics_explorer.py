@@ -116,6 +116,9 @@ def _feature_importance_chart():
     # Sort in descending order of importance
     df_fi = df_fi.sort_values(by=importance_col, ascending=False)
 
+    # Show only the top 20 features
+    df_fi = df_fi.head(20)
+
     st.markdown(
         "This chart shows which features the ExtraTrees model considered most "
         "important when predicting the engagement metric "
