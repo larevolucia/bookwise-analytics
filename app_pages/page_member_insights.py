@@ -26,7 +26,7 @@ def page_member_insights_body():
     strategies.
     """)
 
-    # Load data from Hugging Face Hub
+    # Load data
     hf_url = (
         "https://huggingface.co/datasets/revolucia/"
         "bookwise-analytics-ml/resolve/main/modeling_data/"
