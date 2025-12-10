@@ -26,15 +26,17 @@ def page_member_insights_body():
     strategies.
     """)
 
-    # Load data
-    data_path = os.path.join(
-        "outputs", "datasets", "modeling", "1", "user_profile_features.csv"
+    # Load data from Hugging Face Hub
+    hf_url = (
+        "https://huggingface.co/datasets/revolucia/"
+        "bookwise-analytics-ml/resolve/main/modeling_data/"
+        "user_profile_features.csv"
     )
     model_path = os.path.join(
         "outputs", "models", "kmeans", "1", "kmeans_model.pkl"
     )
 
-    user_profiles = pd.read_csv(data_path)
+    user_profiles = pd.read_csv(hf_url)
     kmeans = joblib.load(model_path)
 
     # Prepare features (must match clustering features)
