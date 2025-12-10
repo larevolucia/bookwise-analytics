@@ -163,6 +163,27 @@ def page_recommendation_comparison_body():
         Genre entropy measures the diversity of genres in a set of books using
         Shannon entropy. A higher entropy value indicates a more diverse and
         balanced distribution of genres among the recommended books.
+
+        **Note on Genre Entropy:**
+
+        The genre entropy values shown above for the editorial and model
+        selections are lower than the overall catalog entropy reported in
+        the EDA notebook. This is expected: entropy measures diversity across
+        all genres present, so when calculated on the full catalog (thousands
+        of books), the value is higher due to broader genre coverage.
+        For reference:
+
+        - **Internal Catalog Genre Entropy:** 4.745
+        - **Supply Catalog Genre Entropy:** 4.930
+
+        When comparing only a handful of recommended titles (e.g. 5 books),
+        entropy will naturally be lower, as the sample covers fewer genres.
+
+        In this context, a reduction from ~4.7/4.9 (catalog) to values around
+        2.32 for the recommendations still indicates a notably diverse
+        selection, given the much smaller sample size. Use these values to
+        compare diversity **between** recommendation strategies, not against
+        the catalog-wide baseline.
         """
     )
 
