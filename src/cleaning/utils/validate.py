@@ -1,6 +1,9 @@
 """ Validation utilities for data cleaning. """
 import ast
 import numpy as np
+# references:
+# https://dev.to/mstuttgart/using-literal-eval-for-string-to-object-conversion-in-python-46i
+# https://www.educative.io/answers/what-is-astliteralevalnodeorstring-in-python
 
 
 def validate_cleaning_results(df, fields, suffix='_clean'):
@@ -108,6 +111,3 @@ def safe_sum_ratings(row):
             return np.nan
 
     return np.nan
-
-# https://dev.to/mstuttgart/using-literal-eval-for-string-to-object-conversion-in-python-46i
-# https://www.educative.io/answers/what-is-astliteralevalnodeorstring-in-python

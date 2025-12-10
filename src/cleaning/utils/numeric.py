@@ -5,9 +5,6 @@ import pandas as pd
 
 
 NUMERIC_EXTRACTION_PATTERN = r'(\d+)'
-# ==========================================
-# PAGES CLEANING
-# ==========================================
 
 
 def clean_pages_field(value, min_pages=10, max_pages=3000):
@@ -45,10 +42,6 @@ def clean_pages_field(value, min_pages=10, max_pages=3000):
     except (ValueError, TypeError):
         return None
 
-
-# ==========================================
-# PRICE CLEANING
-# ==========================================
 
 def clean_price(value):
     """

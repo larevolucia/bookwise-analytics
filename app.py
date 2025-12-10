@@ -1,9 +1,7 @@
-# pylint: disable=unused-import
 """ Main application script for BookWise Analytics Streamlit app """
-# required for running modeling pipeline
-from src.modeling.modeling_pipeline import DropColumns  # noqa: F401
-from src.modeling.modeling_pipeline import FillNAWithValue  # noqa: F401
-from src.modeling.modeling_pipeline import AddMissingFlags  # noqa: F401
+from src.modeling.modeling_pipeline import DropColumns
+from src.modeling.modeling_pipeline import FillNAWithValue
+from src.modeling.modeling_pipeline import AddMissingFlags
 
 # Load pages scripts
 from app_pages.multipage import MultiPage
