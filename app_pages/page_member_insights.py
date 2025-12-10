@@ -1,9 +1,9 @@
 """User Cluster Segmentation Insights Streamlit Page."""
-
-import os
+import io
 import streamlit as st
 import pandas as pd
 import joblib
+import requests
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
 
@@ -27,17 +27,32 @@ def page_member_insights_body():
     """)
 
     # Load data
-    hf_url = (
+    data_url = (
         "https://huggingface.co/datasets/revolucia/"
         "bookwise-analytics-ml/resolve/main/modeling_data/"
         "user_profile_features.csv"
     )
-    model_path = os.path.join(
-        "outputs", "models", "kmeans", "1", "kmeans_model.pkl"
+
+    model_url = (
+        "https://huggingface.co/revolucia/bookclub-cluster/"
+        "resolve/main/modeling_data/kmeans_model.pkl"
     )
 
-    user_profiles = pd.read_csv(hf_url)
-    kmeans = joblib.load(model_path)
+    # Load data
+    try:
+        user_profiles = pd.read_csv(data_url)
+    except Exception as e:
+        st.error(f"Failed to load user profile data: {e}")
+        return
+
+    # Download model file and load with joblib
+    try:
+        response = requests.get(model_url, timeout=10)
+        response.raise_for_status()
+        kmeans = joblib.load(io.BytesIO(response.content))
+    except Exception as e:
+        st.error(f"Failed to download or load the clustering model: {e}")
+        return
 
     # Prepare features (must match clustering features)
     num_cols = [
@@ -50,19 +65,23 @@ def page_member_insights_body():
         user_profiles = user_profiles.drop(columns=['user_id'])
 
     if 'cluster' not in user_profiles.columns:
-        # Preprocessing (as in notebook)
-        user_profiles[num_cols] = (
-            SimpleImputer(strategy='median').fit_transform(
+        try:
+            # Preprocessing (as in notebook)
+            user_profiles[num_cols] = (
+                SimpleImputer(strategy='median').fit_transform(
+                    user_profiles[num_cols]
+                )
+            )
+            user_profiles = pd.get_dummies(
+                user_profiles, columns=cat_cols, drop_first=True
+            )
+            user_profiles[num_cols] = StandardScaler().fit_transform(
                 user_profiles[num_cols]
             )
-        )
-        user_profiles = pd.get_dummies(
-            user_profiles, columns=cat_cols, drop_first=True
-        )
-        user_profiles[num_cols] = StandardScaler().fit_transform(
-            user_profiles[num_cols]
-        )
-        user_profiles['cluster'] = kmeans.predict(user_profiles[num_cols])
+            user_profiles['cluster'] = kmeans.predict(user_profiles[num_cols])
+        except Exception as e:
+            st.error(f"Error during preprocessing or clustering: {e}")
+            return
 
     # Show cluster sizes
     st.subheader("Cluster Sizes")
