@@ -55,7 +55,7 @@ As a business stakeholder, I want to compare editorial vs. model-driven recommen
 **[Feature Importance for Engagement](https://github.com/larevolucia/bookwise-analytics/issues/16)**  
 As a business stakeholder, I want to understand which book features drive engagement so I can optimize catalog selection.
 
-**[Genre Fairness ](https://github.com/larevolucia/bookwise-analytics/issues/19)  **  
+**[Genre Fairness](https://github.com/larevolucia/bookwise-analytics/issues/19)  **  
 As a stakeholder, I want to ensure recommendations maintain genre diversity and fairness, so I don't alienate any user segments.
 
 **[Summary Dashboard](https://github.com/larevolucia/bookwise-analytics/issues/20)**  
@@ -212,7 +212,7 @@ These results exceed the business success criteria (RMSE < 1.0 or R² > 0.7), co
 
 On the dashboard's Recommendation Comparison page, the model-driven approach achieved:
 
-- **Simulated Uplift:** **74.9%** (vs. editorial selection, far exceeding the 10% target)
+- **Simulated Uplift:** **42.13%** (vs. editorial selection, far exceeding the 10% target)
 - **Genre Entropy:** **2.32** (no loss in diversity compared to editorial curation)
 
 This demonstrates that algorithmic recommendations can substantially increase predicted engagement while maintaining genre diversity and fairness.
@@ -249,11 +249,22 @@ This demonstrates that algorithmic recommendations can substantially increase pr
 | [ppscore dependency issue](https://github.com/larevolucia/bookwise-analytics/issues/12)                        | ppscore package causing installation errors         | Refactored python `pyproject.toml`          |
 | [WEBP images from HF not displaying](https://github.com/larevolucia/bookwise-analytics/issues/14)              | Streamlit not rendering WEBP images from HF         | Removed empty space from image URL          |
 | [Deployment error](https://github.com/larevolucia/bookwise-analytics/issues/15)                                | Heroku deployment failed due to missing packages    | Added sklearn to `pyproject.toml`           |
+| [File not found](https://github.com/larevolucia/bookwise-analytics/issues/24)                                | Path pointing to local file    | Hosted version uses hosted file.            |
+| [Feature importance chart: Infinite extent warning](https://github.com/larevolucia/bookwise-analytics/issues/25) | Altair/Streamlit chart warning due to missing or invalid data in feature importance CSV | Data validation and user-friendly error handling added. Warning is harmless since charts display correctly, so further action was deferred. |
+| [Vega-Lite compatibility](https://github.com/larevolucia/bookwise-analytics/issues/26) | Console warning due to Vega-Lite version mismatch between Altair (v5.x) and Streamlit frontend (v6.x). | All charts render and function as expected, so package upgrades were deferred to avoid unnecessary dependency complexity. The warning can be safely ignored unless future issues arise. |
 
+## 15. Test & Coverage
+
+- **Test results and coverage details are available in [`documentation/TEST.md`](documentation/TEST.md).**
+- **Summary:**  
+  All 88 tests pass successfully (`pytest`).  
+  Overall code coverage is **41%**, with 100% coverage for core modeling pipeline code.  
+  Most cleaning and feature engineering utilities are well covered.  
+  Some analysis and EDA modules have low or no coverage—see the [full report](documentation/TEST.md) for details.
 
 ---
 
-## 15. Quick Start
+## 16. Quick Start
 
 1. Clone repo:  
    `git clone https://github.com/larevolucia/bookwise-analytics.git`
@@ -392,5 +403,6 @@ The Open Library API is used as the first enrichment source for missing metadata
 - [Hugging face](https://huggingface.co/docs)
 - [Open Library API documentation](https://openlibrary.org/developers/api)
 - [Google Books API documentation](https://developers.google.com/books/docs/v1/using)
+- [Testing Models with Pytest](https://www.fuzzylabs.ai/blog-post/the-art-of-testing-machine-learning-pipelines)
 - ChatGPT: to refine and correct grammar textual explanations in README.md and notebooks.
 - NotebookLM: Learning guide on data cleaning, to help me find next steps without providing any code.
