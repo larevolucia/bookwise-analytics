@@ -172,8 +172,10 @@ def _feature_importance_chart():
         "- External behavioral signals dominate the top positions.\n"
         "- Features such as rating volume, votes, and like percentage provide "
         "the strongest contribution to engagement prediction.\n"
-        "- Metadata fields (e.g. awards, genre count, publication year) play "
-        "a secondary role compared to external popularity signals."
+        "- Publication recency (Decade `2010`) has notable importance among "
+        "metadata, validating that newer books drive higher engagement."
+        "- Metadata fields play a secondary role compared to external "
+        "popularity signals."
     )
 
 
@@ -283,6 +285,8 @@ def page_book_analytics_explorer_body():
         "threshold with `popularity_score`.\n"
         "- Metadata and internal-only fields show weaker associations and "
         "cannot explain engagement on their own.\n"
+        "- Only metadata field with moderate correlation is `has_award_final` "
+        "(0.31), indicating some value in award-winning titles.\n"
         "- This confirms that the business should rely on external signals to "
         "identify high-engagement titles.\n"
     )
@@ -292,7 +296,6 @@ def page_book_analytics_explorer_body():
     _feature_importance_chart()
 
     # 3. SHAP Summary Plot
-    st.write("---")
     _shap_summary_section()
 
     # 4. Overall BR-1 Summary
