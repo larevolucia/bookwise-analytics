@@ -10,31 +10,36 @@ LinkedIn: [Project Inception Post](https://www.linkedin.com/pulse/learning-think
 
 1. [Project Overview](#1-project-overview)
 2. [Business Understanding](#2-business-understanding)
-    - [Problem Statement](#21-problem-statement)
-    - [Business Objectives](#22-business-objectives)
-    - [Stakeholder Benefits](#23-stakeholder-benefits)
+  - [Problem Statement](#21-problem-statement)
+  - [Business Objectives](#22-business-objectives)
+  - [Stakeholder Benefits](#23-stakeholder-benefits)
 3. [Business Requirements & Mapping](#3-business-requirements--mapping)
-    - [User Stories](#3a-user-stories)
-    - [User Stories Mapped to ML & Visualization Tasks](#3b-user-stories-mapped-to-ml--visualization-tasks)
-    - [Business Requirements & Mapping Table](#3c-business-requirements--mapping)
-    - [Stretch Goal: User Clustering & Segmentation](#stretch-goal-user-clustering--segmentation)
+  - [3.1 User Stories](#31-user-stories)
+  - [3.2 Mapping to ML & Visualization](#32-mapping-to-ml--visualization)
+  - [3.3 Requirements Table](#33-requirements-table)
+  - [3.4 Stretch Goal: Clustering](#34-stretch-goal-clustering)
 4. [Hypotheses & Validation](#4-hypotheses--validation)
 5. [Datasets](#5-datasets)
-6. [Data Collection & Preparation](#6-data-collection--preparation)
-7. [Analytical & ML Tasks](#7-analytical--ml-tasks)
-8. [ML Business Case](#8-ml-business-case)
-9. [Dashboard Design](#9-dashboard-design)
-10. [Project Structure & Notebooks](#10-project-structure--notebooks)
-11. [Deployment & Local Development](#11-deployment--local-development)
-12. [Model Evaluation & Business Impact](#12-model-evaluation--business-impact)
-13. [References & Attribution](#13-references--attribution)
-14. [Bug Fixes](#14-bug-fixes)
-15. [Test & Coverage](#15-test--coverage)
-16. [Quick Start](#16-quick-start)
-17. [Hugging Face Integration & Setup](#17-hugging-face-integration--setup)
-18. [Google Books API](#18-google-books-api)
-19. [Open Library API](#19-open-library-api)
-20. [References](#20-references)
+6. [Data & Model Artefacts](#6-data--model-artefacts)
+7. [Data Collection & Preparation](#7-data-collection--preparation)
+8. [Analytical & ML Tasks](#8-analytical--ml-tasks)
+9. [ML Business Case](#9-ml-business-case)
+10. [Dashboard Design](#10-dashboard-design)
+11. [Project Structure & Notebooks](#11-project-structure--notebooks)
+12. [Deployment & Local Development](#12-deployment--local-development)
+13. [Model Evaluation & Business Impact](#13-model-evaluation--business-impact)
+14. [References & Attribution](#14-references--attribution)
+15. [Bug Fixes](#15-bug-fixes)
+16. [Test & Coverage](#16-test--coverage)
+17. [Quick Start](#17-quick-start)
+18. [Hugging Face Integration & Setup](#18-hugging-face-integration--setup)
+  - [Create Accounts & Tokens](#181-create-accounts--tokens)
+  - [Datasets & Plots Repo](#182-datasets--plots-repo)
+  - [Models Repo](#183-models-repo)
+  - [Using HF in Code](#184-using-hf-in-code)
+19. [Google Books API](#19-google-books-api)
+20. [Open Library API](#20-open-library-api)
+21. [References](#21-references)
 
 ---
 
@@ -80,7 +85,7 @@ Despite a stable subscriber base, engagement and credit redemption rates are dec
 
 ---
 
-## 3a. User Stories
+## 3.1. User Stories
 
 The following user stories are implemented and tracked via GitHub issues.  
 Each story includes ML tasks, actions, and acceptance criteria.
@@ -105,7 +110,7 @@ As a user, I want to search for any book and see its predicted engagement score,
 
 ---
 
-## 3b. User Stories Mapped to ML & Visualization Tasks
+## 3.2. Mapping to ML & Visualization
 
 | User Story                        | ML Task / Visualization                        | Actions Required                                                                                   |
 |------------------------------------|-----------------------------------------------|----------------------------------------------------------------------------------------------------|
@@ -118,7 +123,7 @@ As a user, I want to search for any book and see its predicted engagement score,
 
 ---
 
-## 3c. Business Requirements & Mapping 
+## 3.3. Requirements Table
 | ID   | Requirement                                                                 | Success Indicator                        | Dataset(s)         | Linked Dashboard Page      |
 |------|-----------------------------------------------------------------------------|------------------------------------------|--------------------|---------------------------|
 | BR-1 | Identify features correlated with engagement                                | Correlation ≥ 0.4                        | BBE                | Analytics Explorer        |
@@ -129,7 +134,7 @@ As a user, I want to search for any book and see its predicted engagement score,
 > If these thresholds are not met, the corresponding ML task is considered unsuccessful and is not recommended for operational use.
 ---
 
-### Stretch Goal: User Clustering & Segmentation
+## 3.4. Stretch Goal: Clustering
 
 As an additional feature, this project implements **user clustering** using KMeans to segment members based on their reading behavior and preferences. This segmentation helps identify distinct user groups and supports more targeted marketing and personalization strategies.
 
@@ -193,7 +198,27 @@ As an additional feature, this project implements **user clustering** using KMea
 
 ---
 
-## 6. Data Collection & Preparation
+## 6. Data & Model Artefacts
+
+To ensure reproducibility and keep the repository lightweight, large datasets and trained model artefacts are hosted on Hugging Face.
+
+#### Datasets
+- **Bookwise Analytics – Modeling Dataset**  
+  https://huggingface.co/datasets/revolucia/bookwise-analytics-ml  
+  Cleaned and feature-engineered dataset used for engagement modeling.
+
+- **Book Club User Clusters**  
+  https://huggingface.co/revolucia/bookclub-cluster  
+  Precomputed user segmentation results for member insights.
+
+#### Models
+- **Popularity Score Model (ExtraTreesRegressor)**  
+  https://huggingface.co/revolucia/popularity-score-model  
+  Trained regression model and evaluation metrics used by the Streamlit application.
+
+---
+
+## 7. Data Collection & Preparation
 
 - **Data Collection:** Jupyter notebooks fetch and audit datasets, including API enrichment.
 - **Data Cleaning:** Handle missing values, standardize fields, and merge datasets.
@@ -202,7 +227,7 @@ As an additional feature, this project implements **user clustering** using KMea
 
 ---
 
-## 7. Analytical & ML Tasks
+## 8. Analytical & ML Tasks
 
 | Requirement | Task                                      | Notebook(s)                  | Outcome/Metric                |
 |-------------|-------------------------------------------|------------------------------|-------------------------------|
@@ -213,7 +238,7 @@ As an additional feature, this project implements **user clustering** using KMea
 
 ---
 
-## 8. ML Business Case
+## 9. ML Business Case
 
 - **Aim:** Predict book engagement to optimize recommendations and retention.
 - **Learning Method:** Regression (RandomForest, XGBoost) and clustering.
@@ -223,7 +248,7 @@ As an additional feature, this project implements **user clustering** using KMea
 
 ---
 
-## 9. Dashboard Design
+## 10. Dashboard Design
 
 **Pages:**
 
@@ -237,7 +262,7 @@ As an additional feature, this project implements **user clustering** using KMea
 
 ---
 
-## 10. Project Structure & Notebooks
+## 11. Project Structure & Notebooks
 
 ```
 /notebooks
@@ -254,7 +279,7 @@ As an additional feature, this project implements **user clustering** using KMea
 
 ---
 
-## 11. Deployment & Local Development
+## 12. Deployment & Local Development
 
 - **Streamlit app:** `streamlit run app.py`
 - **Heroku deployment:** See instructions in this README.
@@ -263,7 +288,7 @@ As an additional feature, this project implements **user clustering** using KMea
 
 ---
 
-## 12. Model Evaluation & Business Impact
+## 13. Model Evaluation & Business Impact
 
 ### Summary
 
@@ -300,7 +325,7 @@ This demonstrates that algorithmic recommendations can substantially increase pr
 - [`app_pages/page_recommendation_comparison.py`](app_pages/page_recommendation_comparison.py) — Implementation of comparison logic
 ---
 
-## 13. References & Attribution
+## 14. References & Attribution
 
 - All datasets are open-source and referenced.
 - External code and resources are credited in code comments and this README.
@@ -322,7 +347,7 @@ This demonstrates that algorithmic recommendations can substantially increase pr
 | [Feature importance chart: Infinite extent warning](https://github.com/larevolucia/bookwise-analytics/issues/25) | Altair/Streamlit chart warning due to missing or invalid data in feature importance CSV | Data validation and user-friendly error handling added. Warning is harmless since charts display correctly, so further action was deferred. |
 | [Vega-Lite compatibility](https://github.com/larevolucia/bookwise-analytics/issues/26) | Console warning due to Vega-Lite version mismatch between Altair (v5.x) and Streamlit frontend (v6.x). | All charts render and function as expected, so package upgrades were deferred to avoid unnecessary dependency complexity. The warning can be safely ignored unless future issues arise. |
 
-## 15. Test & Coverage
+## 16. Test & Coverage
 
 - **Test results and coverage details are available in [`documentation/TEST.md`](documentation/TEST.md).**
 - **Summary:**  
@@ -333,7 +358,7 @@ This demonstrates that algorithmic recommendations can substantially increase pr
 
 ---
 
-## 16. Quick Start
+## 17. Quick Start
 
 1. Clone repo:  
    `git clone https://github.com/larevolucia/bookwise-analytics.git`
@@ -345,7 +370,7 @@ This demonstrates that algorithmic recommendations can substantially increase pr
    `streamlit run app.py`
 ---
 
-## 17. Hugging Face Integration & Setup
+## 18. Hugging Face Integration & Setup
 
 This project uses **two Hugging Face repositories** for seamless data and model management:
 
@@ -357,7 +382,7 @@ This project uses **two Hugging Face repositories** for seamless data and model 
   Repository type: `model`  
   Stores trained model artifacts for deployment and inference.
 
-### 17a. Create Hugging Face Accounts & Tokens
+### 18.1. Create Accounts & Tokens
 
 - Sign up at [Hugging Face](https://huggingface.co/join).
 - Go to [Access Tokens](https://huggingface.co/settings/tokens) and create a **Write** token for each repository.
@@ -367,7 +392,7 @@ This project uses **two Hugging Face repositories** for seamless data and model 
   HUGGINGFACE_MODEL_TOKEN=hf_yyyyyyyyyyyyyyyyyyyyyyyyyyyy
   ```
 
-### 17b. Datasets & Plots Repository
+### 18.2. Datasets & Plots Repo
 
 - Clone or create a new dataset repo (e.g., `bookwise-analytics-ml`).
 - Upload datasets and EDA plots using the [Hugging Face Hub CLI](https://huggingface.co/docs/hub/how-to-upload):
@@ -377,7 +402,7 @@ This project uses **two Hugging Face repositories** for seamless data and model 
   huggingface-cli upload ./data/ --repo-type dataset --repo-id <your-username>/bookwise-analytics-ml
   ```
 
-### 17c. Models Repository
+### 18.3. Models Repo
 
 - Clone or create a new model repo (e.g., `popularity-score-model`).
 - Upload model files:
@@ -387,7 +412,7 @@ This project uses **two Hugging Face repositories** for seamless data and model 
   huggingface-cli upload ./models/ --repo-type model --repo-id <your-username>/popularity-score-model
   ```
 
-### 17d. Using Hugging Face in Code
+### 18.4. Using HF in Code
 
 - Use the `datasets` library to load datasets and the `huggingface_hub` library to download model artifacts directly:
 
@@ -410,7 +435,7 @@ This project uses **two Hugging Face repositories** for seamless data and model 
 
 ---
 
-## 18. Google Books API
+## 19. Google Books API
 
 This project uses the Google Books API to enrich book metadata (pages, publisher, publication date, description, categories, etc.) for titles missing information after merging core datasets.
 
@@ -434,7 +459,7 @@ GOOGLE_BOOKS_API_KEY=<YOUR_KEY>
 
 ---
 
-## 19. Open Library API
+## 20. Open Library API
 
 The Open Library API is used as the first enrichment source for missing metadata, since it is public and does not require authentication or API keys.
 
@@ -445,7 +470,7 @@ The Open Library API is used as the first enrichment source for missing metadata
 
 ---
 
-## 20. References
+## 21. References
 
 
 - [Regex101](https://regex101.com/): Online regex tester and debugger.
