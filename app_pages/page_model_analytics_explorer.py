@@ -284,7 +284,7 @@ def page_book_analytics_explorer_body():
         "- Metadata and internal-only fields show weaker associations and "
         "cannot explain engagement on their own.\n"
         "- This confirms that the business should rely on external signals to "
-        "identify high-engagement titles."
+        "identify high-engagement titles.\n"
     )
 
     # 2. Feature Importance (Model-Based)
@@ -309,5 +309,9 @@ def page_book_analytics_explorer_body():
         "them to predict `popularity_score`, which is later consumed by the "
         "Recommendation and Model Runner pages.\n\n"
         "These insights guide both **acquisition** (which titles to license) "
-        "and **editorial curation** (which books to promote to members)."
+        "and **editorial curation** (which books to promote to members).\n\n"
+        "**Recommendation:** Prioritise licensing titles with high external"
+        " popularity scores when data is available. "
+        "For new releases without external data, focus on publication recency "
+        "and awards as secondary metadata indicators of potential engagement."
     )

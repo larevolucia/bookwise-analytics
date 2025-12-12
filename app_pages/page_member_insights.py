@@ -111,3 +111,19 @@ def page_member_insights_body():
     - **Genre Explorers** are more diverse in their reading and rate more,
     older, shorter books.
     """)
+
+    st.write("---"
+             )
+    st.write("### Advice")
+
+    st.success(
+        "**Recommendation:** Understanding these user segments allows for "
+        "tailored marketing and personalization strategies. "
+        "**Genre Specialists** may respond well to  targeted "
+        "recommendations of new releases in their preferred genres, "
+        "while **Genre Explorers** may appreciate curated lists that "
+        "highlight diverse genres and authors. "
+        "Combining strategies may yield the best member engagement outcomes."
+    )
+
+    st.write("---")

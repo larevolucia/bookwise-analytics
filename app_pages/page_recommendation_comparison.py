@@ -249,3 +249,13 @@ def page_recommendation_comparison_body():
     )
 
     st.write("---")
+    st.write("### Interpretation & Advice")
+
+    st.success(
+        "**Recommendation:** While model recommendations show promising "
+        "uplift stable diversity, continued monitoring and refinement "
+        "are needed. A hybrid approach combining editorial insight with "
+        "model-driven picks may yield the best member engagement outcomes."
+    )
+
+    st.write("---")
