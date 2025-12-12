@@ -1,6 +1,40 @@
 # Bookwise Analytics: Predictive Book Recommendation System
 
 Live App: [Streamlit Dashboard](https://bookwise-analytics-1d891f772a24.herokuapp.com/)
+Project Repo: [GitHub Repository](https://github.com/users/larevolucia/projects/15)
+LinkedIn: [Project Inception Post](https://www.linkedin.com/pulse/learning-think-like-data-scientist-l%C3%BAcia-reis-yca6e/?trackingId=PuHDRjSOpaBrIQ5TJOR%2Bsw%3D%3D)
+
+## Table of Contents
+
+1. [Project Overview](#1-project-overview)
+2. [Business Understanding (CRISP-DM: Business Understanding)](#2-business-understanding-crisp-dm-business-understanding)
+    - [Problem Statement](#21-problem-statement)
+    - [Business Objectives](#22-business-objectives)
+    - [Stakeholder Benefits](#23-stakeholder-benefits)
+3. [Business Requirements & Mapping (LO2, LO3)](#3-business-requirements--mapping-lo2-lo3)
+    - [User Stories](#3a-user-stories)
+    - [User Stories Mapped to ML & Visualization Tasks](#3b-user-stories-mapped-to-ml--visualization-tasks)
+    - [Business Requirements & Mapping Table](#3c-business-requirements--mapping)
+    - [Stretch Goal: User Clustering & Segmentation](#stretch-goal-user-clustering--segmentation)
+4. [Hypotheses & Validation](#4-hypotheses--validation)
+5. [Datasets](#5-datasets)
+6. [Data Collection & Preparation](#6-data-collection--preparation)
+7. [Analytical & ML Tasks](#7-analytical--ml-tasks)
+8. [ML Business Case](#8-ml-business-case)
+9. [Dashboard Design](#9-dashboard-design)
+10. [Project Structure & Notebooks](#10-project-structure--notebooks)
+11. [Deployment & Local Development](#11-deployment--local-development)
+12. [Model Evaluation & Business Impact](#12-model-evaluation--business-impact)
+13. [References & Attribution](#13-references--attribution)
+14. [Bug Fixes](#14-bug-fixes)
+15. [Test & Coverage](#15-test--coverage)
+16. [Quick Start](#16-quick-start)
+17. [Hugging Face Integration & Setup](#17-hugging-face-integration--setup)
+18. [Google Books API](#18-google-books-api)
+19. [Open Library API](#19-open-library-api)
+20. [References](#20-references)
+
+---
 
 ## 1. Project Overview
 
@@ -55,7 +89,7 @@ As a business stakeholder, I want to compare editorial vs. model-driven recommen
 **[Feature Importance for Engagement](https://github.com/larevolucia/bookwise-analytics/issues/16)**  
 As a business stakeholder, I want to understand which book features drive engagement so I can optimize catalog selection.
 
-**[Genre Fairness](https://github.com/larevolucia/bookwise-analytics/issues/19)  **  
+**[Genre Fairness](https://github.com/larevolucia/bookwise-analytics/issues/19)**  
 As a stakeholder, I want to ensure recommendations maintain genre diversity and fairness, so I don't alienate any user segments.
 
 **[Summary Dashboard](https://github.com/larevolucia/bookwise-analytics/issues/20)**  
@@ -89,14 +123,42 @@ As a user, I want to search for any book and see its predicted engagement score,
 
 ---
 
-## Stretch Goal: User Clustering & Segmentation
+### Stretch Goal: User Clustering & Segmentation
 
-As an additional feature, this project implements **user clustering** using KMeans to segment members based on their reading behavior and preferences. This segmentation helps identify distinct user groups ( "Genre Specialists" vs. "Genre Explorers") and supports more targeted marketing and personalization strategies.
+As an additional feature, this project implements **user clustering** using KMeans to segment members based on their reading behavior and preferences. This segmentation helps identify distinct user groups and supports more targeted marketing and personalization strategies.
 
-- See `notebooks/07_Customer_Cluster.ipynb` for the clustering workflow and analysis.
-- Explore the "Member Insights" page in the dashboard for cluster profiles.
+#### Clustering Approach
 
-*Note: Clustering is provided as a stretch goal to demonstrate unsupervised learning and user segmentation beyond the core recommendation system.*
+- **Features Used:**  
+  Aggregated user-level features such as average pages per book, number of genres read, genre diversity, genre concentration, top genre share, and number of interactions.
+- **Preprocessing:**  
+  Missing values are imputed (numerical: median, categorical: mode), categorical features are one-hot encoded, and all features are standardized.
+- **Algorithm:**  
+  KMeans clustering is applied to the processed features. The optimal number of clusters is determined using the silhouette score and elbow method.
+- **Cluster Profiles:**  
+  Analysis revealed **two main user segments**:
+  - **Cluster 0: Genre Specialists**  
+    - Fewer ratings overall  
+    - Higher average rating per book  
+    - Preference for newer and longer books  
+    - Less genre diversity, more focused on a single genre  
+  - **Cluster 1: Genre Explorers**  
+    - More ratings overall  
+    - Slightly lower average rating per book  
+    - Preference for older and shorter books  
+    - Higher genre diversity, less focused on a single genre  
+
+#### Business Interpretation
+
+- **Genre Specialists** may respond well to targeted recommendations within their favorite genres and new releases.
+- **Genre Explorers** may appreciate diverse recommendations and discovery-oriented features.
+
+#### Outputs
+
+- Cluster assignments and profiles are available in the dashboard's "Member Insights" page.
+- The clustering workflow, evaluation, and business rationale are fully documented in [`notebooks/07_Member_Cluster.ipynb`](notebooks/07_Member_Cluster.ipynb).
+
+*This segmentation enables more personalized engagement strategies and actionable insights for marketing and editorial teams.*
 
 ---
 
@@ -175,10 +237,11 @@ As an additional feature, this project implements **user clustering** using KMea
 /notebooks
 ├── 01_Data_Collection.ipynb
 ├── 02_Data_Cleaning.ipynb
-├── 03_Data_Imputation.ipynb
+├── 03_Data_Enrichment_and_Dataset_Integration.ipynb
 ├── 04_Exploratory_Data_Analysis.ipynb
 ├── 05_Feature_Engineering.ipynb
 ├── 06_Modeling.ipynb
+├── 07_Member_Cluster.ipynb
 ```
 - Each notebook starts with objectives, inputs, and outputs.
 - Data preparation and feature engineering are clearly documented.
@@ -276,7 +339,7 @@ This demonstrates that algorithmic recommendations can substantially increase pr
    `streamlit run app.py`
 ---
 
-## Hugging Face Integration & Setup
+## 17. Hugging Face Integration & Setup
 
 This project uses **two Hugging Face repositories** for seamless data and model management:
 
@@ -288,7 +351,7 @@ This project uses **two Hugging Face repositories** for seamless data and model 
   Repository type: `model`  
   Stores trained model artifacts for deployment and inference.
 
-### 1. Create Hugging Face Accounts & Tokens
+### 17a. Create Hugging Face Accounts & Tokens
 
 - Sign up at [Hugging Face](https://huggingface.co/join).
 - Go to [Access Tokens](https://huggingface.co/settings/tokens) and create a **Write** token for each repository.
@@ -298,7 +361,7 @@ This project uses **two Hugging Face repositories** for seamless data and model 
   HUGGINGFACE_MODEL_TOKEN=hf_yyyyyyyyyyyyyyyyyyyyyyyyyyyy
   ```
 
-### 2. Datasets & Plots Repository
+### 17b. Datasets & Plots Repository
 
 - Clone or create a new dataset repo (e.g., `bookwise-analytics-ml`).
 - Upload datasets and EDA plots using the [Hugging Face Hub CLI](https://huggingface.co/docs/hub/how-to-upload):
@@ -308,7 +371,7 @@ This project uses **two Hugging Face repositories** for seamless data and model 
   huggingface-cli upload ./data/ --repo-type dataset --repo-id <your-username>/bookwise-analytics-ml
   ```
 
-### 3. Models Repository
+### 17c. Models Repository
 
 - Clone or create a new model repo (e.g., `popularity-score-model`).
 - Upload model files:
@@ -318,7 +381,7 @@ This project uses **two Hugging Face repositories** for seamless data and model 
   huggingface-cli upload ./models/ --repo-type model --repo-id <your-username>/popularity-score-model
   ```
 
-### 4. Using Hugging Face in Code
+### 17d. Using Hugging Face in Code
 
 - Use the `datasets` library to load datasets and the `huggingface_hub` library to download model artifacts directly:
 
@@ -341,7 +404,7 @@ This project uses **two Hugging Face repositories** for seamless data and model 
 
 ---
 
-### Google Books API
+## 18. Google Books API
 
 This project uses the Google Books API to enrich book metadata (pages, publisher, publication date, description, categories, etc.) for titles missing information after merging core datasets.
 
@@ -365,7 +428,7 @@ GOOGLE_BOOKS_API_KEY=<YOUR_KEY>
 
 ---
 
-### Open Library API
+## 19. Open Library API
 
 The Open Library API is used as the first enrichment source for missing metadata, since it is public and does not require authentication or API keys.
 
@@ -376,7 +439,7 @@ The Open Library API is used as the first enrichment source for missing metadata
 
 ---
 
-## References
+## 20. References
 
 
 - [Regex101](https://regex101.com/): Online regex tester and debugger.
