@@ -365,6 +365,7 @@ This demonstrates that algorithmic recommendations can substantially increase pr
 2. Set up `.env` with API keys.
 3. Install dependencies:  
    `pip install -e ".[dev,viz,ml]"`
+> requirements.txt is optimized for deployment; use `pyproject.toml` for local development.
 4. Run notebooks for data prep and modeling.
 5. Launch Streamlit:  
    `streamlit run app.py`
@@ -390,6 +391,7 @@ This project uses **two Hugging Face repositories** for seamless data and model 
   ```
   HUGGINGFACE_TOKEN=hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   HUGGINGFACE_MODEL_TOKEN=hf_yyyyyyyyyyyyyyyyyyyyyyyyyyyy
+  HUGGINGFACE_CLUSTER_TOKEN=hf_zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   ```
 
 ### 18.2. Datasets & Plots Repo
