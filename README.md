@@ -1,17 +1,19 @@
 # Bookwise Analytics: Predictive Book Recommendation System
 
 Live App: [Streamlit Dashboard](https://bookwise-analytics-1d891f772a24.herokuapp.com/)
+
 Project Repo: [GitHub Repository](https://github.com/users/larevolucia/projects/15)
+
 LinkedIn: [Project Inception Post](https://www.linkedin.com/pulse/learning-think-like-data-scientist-l%C3%BAcia-reis-yca6e/?trackingId=PuHDRjSOpaBrIQ5TJOR%2Bsw%3D%3D)
 
 ## Table of Contents
 
 1. [Project Overview](#1-project-overview)
-2. [Business Understanding (CRISP-DM: Business Understanding)](#2-business-understanding-crisp-dm-business-understanding)
+2. [Business Understanding](#2-business-understanding)
     - [Problem Statement](#21-problem-statement)
     - [Business Objectives](#22-business-objectives)
     - [Stakeholder Benefits](#23-stakeholder-benefits)
-3. [Business Requirements & Mapping (LO2, LO3)](#3-business-requirements--mapping-lo2-lo3)
+3. [Business Requirements & Mapping](#3-business-requirements--mapping)
     - [User Stories](#3a-user-stories)
     - [User Stories Mapped to ML & Visualization Tasks](#3b-user-stories-mapped-to-ml--visualization-tasks)
     - [Business Requirements & Mapping Table](#3c-business-requirements--mapping)
@@ -46,7 +48,7 @@ Business stakeholders, data practitioners, and editorial teams seeking to maximi
 
 ---
 
-## 2. Business Understanding (CRISP-DM: Business Understanding)
+## 2. Business Understanding
 
 ### 2.1. Problem Statement
 
@@ -67,7 +69,7 @@ Despite a stable subscriber base, engagement and credit redemption rates are dec
 
 ---
 
-## 3. Business Requirements & Mapping (LO2, LO3)
+## 3. Business Requirements & Mapping
 
 | ID   | Requirement                                                                 | Success Indicator                        | Dataset(s)         | Linked Dashboard Page      |
 |------|-----------------------------------------------------------------------------|------------------------------------------|--------------------|---------------------------|
