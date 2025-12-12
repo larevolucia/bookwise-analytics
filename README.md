@@ -471,3 +471,25 @@ The Open Library API is used as the first enrichment source for missing metadata
 - [Testing Models with Pytest](https://www.fuzzylabs.ai/blog-post/the-art-of-testing-machine-learning-pipelines)
 - ChatGPT: to refine and correct grammar textual explanations in README.md and notebooks.
 - NotebookLM: Learning guide on data cleaning, to help me find next steps without providing any code.
+
+## Acknowledgements
+
+Thanks to all who provided feedback and support during this project, including peers, mentors, and the open-source community.
+
+## Potential Next Steps
+
+**Cold Start Model for Metadata Features Importance:**
+
+Develop a model to estimate engagement or recommendation quality using only metadata features (e.g., genre, author, publication year) for new books with no external popularity signals (ratings, reviews, etc.).
+
+**Hybrid Model for Collaborative Filtering:**
+
+Explore a hybrid approach that combines collaborative filtering (user-item interactions) with content-based features to improve recommendations, especially for users or books with sparse data.
+
+**New Feature Engineering:**
+
+Investigate additional features such as text embeddings from book descriptions, author popularity or publisher reputation via wikipedia or social media signals to enhance model performance.
+
+**Best Seller Data Integration:**
+
+Incorporate external best seller lists (e.g. NYT, Amazon) as features to capture market trends and further improve engagement predictions.
