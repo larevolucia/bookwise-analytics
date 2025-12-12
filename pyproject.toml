@@ -54,7 +54,7 @@ viz = [
 pythonpath = [""]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
-addopts = "-v --tb=short"
+addopts = "-v --tb=short --cov=src --cov-report=term-missing"
 
 [tool.setuptools]
 packages = ["src"]
