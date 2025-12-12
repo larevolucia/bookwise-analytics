@@ -296,5 +296,6 @@ def page_summary_body():
         "**Next Steps**: Use the navigation menu on the left to:\n"
         "* Explore features and correlations in **Model Analytics Explorer**\n"
         "* Compare recommendation types in **Recommendation Comparison**\n"
-        "* Analyze book prediction scores in **Model Runner**"
+        "* Analyze book prediction scores in **Model Runner**\n"
+        "* Analyze member segments in **Members Insights**"
     )

@@ -99,10 +99,52 @@ def page_recommendation_comparison_body():
         top_n=5
     )
 
+    # Select 3 editorial books
+    editorial_selected = top_books.head(3)
+
+    # Get top 15 model recommendations
+    top_15_model = get_top_predicted_books(
+        model=model,
+        features_path=features_path,
+        catalog_path=catalog_path,
+        top_n=15
+    )
+
+    # Specify goodreads_id_clean for Dune and Where the Crawdads Sing
+    dune_id = "44767458"
+    crawdads_id = "36809135"
+
+    # Select these two from the model's top 15
+    handpicked_books = top_15_model[
+        top_15_model["goodreads_id_clean"]
+        .astype(str)
+        .isin([dune_id, crawdads_id])
+    ]
+
+    # Combine for final editorial list
+    final_editorial_list = pd.concat(
+        [editorial_selected, handpicked_books],
+        ignore_index=True
+    )
+
+    # Add predicted score for each book
+    scores = []
+    for idx, row in final_editorial_list.iterrows():
+        if (
+            "goodreads_id_clean" in row
+            and "goodreads_id_clean" in features_df.columns
+        ):
+            goodreads_id = row["goodreads_id_clean"]
+            score = get_book_predicted_score(model, features_df, goodreads_id)
+        else:
+            score = None
+        scores.append(score)
+    final_editorial_list["predicted_score"] = scores
+
     # Display comparison table
     st.write("### Recommendation Comparison Table")
     st.write("**Editorial Selection:**")
-    st.dataframe(top_books)
+    st.dataframe(final_editorial_list)
 
     st.write("**Model Recommendations:**")
     st.dataframe(
@@ -116,7 +158,7 @@ def page_recommendation_comparison_body():
 
     st.write("---")
     # Simulate uplift
-    uplift = simulate_uplift(top_books, model_books)
+    uplift = simulate_uplift(final_editorial_list, model_books)
 
     # Calculate and display genre entropy
     # For editorial selection
@@ -145,6 +187,25 @@ def page_recommendation_comparison_body():
         )
 
     st.write("---")
+
+    # Explain how editorial selection is simulated
+    st.markdown(
+        """
+        **How is Editorial Selection Simulated?**
+
+        The editorial selection is designed to mimic how a human editor might
+        curate a recommended list. We start by selecting the top 3 books from
+        the supply catalog that meet strict editorial criteria, such as recent
+        publication, major publisher, award-winning status, and high author
+        reputation, sorted by popularity and critical acclaim. To reflect real
+        editorial practice, we then supplement this list with 2 handpicked
+        titles from the model's top recommendations that are culturally
+        relevant or have renewed interest (for example, classics like *Dune*
+        due to recent adaptations). This hybrid approach ensures the simulated
+        editorial list is both timely and contextually relevant, closely
+        matching how editors blend current hits with enduring favorites.
+        """
+    )
 
     # Explain how simulate_uplift() works
     st.markdown(

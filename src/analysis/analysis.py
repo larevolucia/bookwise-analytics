@@ -62,12 +62,15 @@ def get_top_predicted_books(
     top_books = (
         merged.sort_values("predicted_score", ascending=False).head(top_n)
     )
-    return top_books[[
-        "title_clean",
-        "primary_author",
-        "genres_clean",
-        "predicted_score",
-    ]]
+    return top_books[
+        [
+            "goodreads_id_clean",
+            "title_clean",
+            "primary_author",
+            "genres_clean",
+            "predicted_score",
+        ]
+    ]
 
 
 def get_top_external_books(catalog_path, top_n=5):
@@ -146,9 +149,7 @@ def simulate_uplift(
     from editorial selection to model recommendations.
     Returns uplift as a float (percentage).
     """
-    editorial_mean = editorial_df["predicted_score"].mean()
-    model_mean = model_df["predicted_score"].mean()
-    if editorial_mean == 0 or pd.isnull(editorial_mean):
-        return None
-    uplift = (model_mean - editorial_mean) / abs(editorial_mean) * 100
+    editorial_score = editorial_df["predicted_score"].mean()
+    model_score = model_df["predicted_score"].mean()
+    uplift = (model_score - editorial_score) / editorial_score * 100
     return uplift

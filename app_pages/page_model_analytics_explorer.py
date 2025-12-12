@@ -85,7 +85,7 @@ def _feature_importance_chart():
         - 'feature'
         - 'importance'
     """
-    st.write("### 2. Feature Importance (Model-Based)")
+    st.write("### 2. Feature Importance")
 
     fi_path = "outputs/model_plots/et_feature_importance.csv"
 
@@ -112,6 +112,26 @@ def _feature_importance_chart():
 
     feature_col = cols_lower["feature"]
     importance_col = cols_lower["importance"]
+
+    # Remove rows with missing or non-finite importance values
+    df_fi = df_fi[np.isfinite(df_fi[importance_col])]
+
+    # if no valid data remains, show a warning and return
+    if df_fi.empty:
+        st.error(
+            "**No valid feature importance data to display.**\n\n"
+            "This may be due to missing, invalid, or all-zero values in your"
+            " CSV file. "
+            "Please check that `outputs/model_plots/et_feature_importance.csv`"
+            " exists, has the correct columns, and contains valid numeric "
+            "values."
+        )
+        # show debug info for developers
+        st.write("**Debug info:**")
+        st.write("CSV columns:", list(cols_lower.values()))
+        st.write("First 5 rows of raw data:")
+        st.write(pd.read_csv(fi_path).head())
+        return
 
     # Sort in descending order of importance
     df_fi = df_fi.sort_values(by=importance_col, ascending=False)
@@ -166,7 +186,7 @@ def _shap_summary_section():
 
     You can adjust the filename/extension here to match what you exported.
     """
-    st.write("### 3. SHAP Summary Plot (Global Model Explanation)")
+    st.write("### 3. SHAP Summary Plot")
 
     shap_path = "outputs/model_plots/et_shap_summary.png"
 
