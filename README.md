@@ -82,14 +82,17 @@ Despite a stable subscriber base, engagement and credit redemption rates are dec
 
 ## 3a. User Stories
 
+The following user stories are implemented and tracked via GitHub issues.  
+Each story includes ML tasks, actions, and acceptance criteria.
+
 **[High Engagement Titles](https://github.com/larevolucia/bookwise-analytics/issues/21)**  
-As an editorial team member, I want to see which books are predicted to have high engagement so I can focus curation efforts.
+As an editorial team member, I want to see which books are predicted to have high engagement, so I can focus curation efforts.
 
 **[Engagement Uplift Prediction](https://github.com/larevolucia/bookwise-analytics/issues/18)**  
 As a business stakeholder, I want to compare editorial vs. model-driven recommendations to understand uplift, so I can make informed decisions.
 
 **[Feature Importance for Engagement](https://github.com/larevolucia/bookwise-analytics/issues/16)**  
-As a business stakeholder, I want to understand which book features drive engagement so I can optimize catalog selection.
+As a business stakeholder, I want to understand which book features drive engagement, so I can optimize catalog selection.
 
 **[Genre Fairness](https://github.com/larevolucia/bookwise-analytics/issues/19)**  
 As a stakeholder, I want to ensure recommendations maintain genre diversity and fairness, so I don't alienate any user segments.
@@ -123,6 +126,7 @@ As a user, I want to search for any book and see its predicted engagement score,
 | BR-3 | Estimate retention uplift from recommendations                              | Simulated uplift ≥ 10%                   | BBE, Goodbooks     | Recommendation Comparison |
 | BR-4 | Maintain diversity/fairness in recommendations                             | Shannon Entropy ≥ editorial baseline     | BBE, Goodbooks     | Diversity Metrics         |
 
+> If these thresholds are not met, the corresponding ML task is considered unsuccessful and is not recommended for operational use.
 ---
 
 ### Stretch Goal: User Clustering & Segmentation
