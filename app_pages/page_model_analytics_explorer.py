@@ -192,7 +192,7 @@ def _shap_summary_section():
     st.image(
         shap_path,
         caption="SHAP Summary Plot: ExtraTrees engagement model",
-        width=900,
+        width='content',
     )
 
     st.info(
