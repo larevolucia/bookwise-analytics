@@ -505,7 +505,7 @@ The Open Library API is used as the first enrichment source for missing metadata
 ### Use of AI Tools
 
 - **ChatGPT**: used to refine and correct grammar and clarity of textual explanations in the README and notebooks, and to improve the wording of existing comments and docstrings without altering code logic or functionality.
-- **GitHub Copilot**: used as an IDE assistance tool to suggest boilerplate patterns and standard syntax for data processing and visualisation (e.g. library usage and plotting scaffolds). All suggestions were critically reviewed, adapted, and integrated by the author, with full understanding of the resulting code.
+- **GitHub Copilot (free version)**: used as an IDE assistance tool to suggest boilerplate patterns and standard syntax for data processing and visualisation (e.g. library usage and plotting scaffolds). All suggestions were critically reviewed, adapted, and integrated by the author, with full understanding of the resulting code.
 - **NotebookLM**: used as a learning guide on data cleaning and modeling concepts to help identify possible next steps and guide through documentation without providing or generating any code.
 
 All data processing, analysis, modeling, and application code were written and implemented by the author.
