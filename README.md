@@ -500,8 +500,15 @@ The Open Library API is used as the first enrichment source for missing metadata
 - [Open Library API documentation](https://openlibrary.org/developers/api)
 - [Google Books API documentation](https://developers.google.com/books/docs/v1/using)
 - [Testing Models with Pytest](https://www.fuzzylabs.ai/blog-post/the-art-of-testing-machine-learning-pipelines)
-- ChatGPT: to refine and correct grammar textual explanations in README.md and notebooks.
-- NotebookLM: Learning guide on data cleaning, to help me find next steps without providing any code.
+
+
+### Use of AI Tools
+
+- **ChatGPT**: used to refine and correct grammar and clarity of textual explanations in the README and notebooks, and to improve the wording of existing comments and docstrings without altering code logic or functionality.
+- **GitHub Copilot**: used as an IDE assistance tool to suggest boilerplate patterns and standard syntax for data processing and visualisation (e.g. library usage and plotting scaffolds). All suggestions were critically reviewed, adapted, and integrated by the author, with full understanding of the resulting code.
+- **NotebookLM**: used as a learning guide on data cleaning and modeling concepts to help identify possible next steps and guide through documentation without providing or generating any code.
+
+All data processing, analysis, modeling, and application code were written and implemented by the author.
 
 ## Acknowledgements
 
