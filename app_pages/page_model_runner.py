@@ -1,11 +1,12 @@
 """ Model Runner Page: Predict Engagement for a Selected Book """
-import tempfile  # standard import first
+import tempfile
+import os
+import json
 import streamlit as st
 import pandas as pd
 import joblib
 import requests
 import altair as alt
-from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.exceptions import NotFittedError
 from src.analysis.analysis import (
     get_top_predicted_books
@@ -30,15 +31,24 @@ def _load_eval_predictions_with_actuals():
         return None, None, None
 
 
-def _render_model_metrics(eval_df):
-    """Display model performance metrics (R² and RMSE)."""
-    r2 = r2_score(eval_df["actual_score"], eval_df["predicted_score"])
-    rmse = mean_squared_error(
-        eval_df["actual_score"],
-        eval_df["predicted_score"],
-        squared=False
+def _render_model_metrics():
+    """Display model performance metrics (R² and RMSE) from saved JSON file."""
+    metrics_path = os.path.join(
+        "outputs",
+        "models",
+        "extratree",
+        "3",
+        "metrics.json"
     )
-    st.caption(f"R²: {r2:.3f} | RMSE: {rmse:.3f}")
+
+    try:
+        with open(metrics_path, 'r', encoding='utf-8') as f:
+            metrics = json.load(f)
+        r2 = metrics.get("r2", 0)
+        rmse = metrics.get("rmse", 0)
+        st.caption(f"R²: {r2:.3f} | RMSE: {rmse:.3f}")
+    except (FileNotFoundError, json.JSONDecodeError, KeyError):
+        st.error("Could not load model metrics.")
 
 
 def _render_residuals_plot(eval_df):
@@ -247,7 +257,7 @@ def page_model_runner_body():
             )
         else:
             st.write("Validation Predictions")
-            _render_model_metrics(eval_df)
+            _render_model_metrics()
 
             # eesponsive layout: side-by-side on desktop, stacked on mobile
             cols = st.columns(2)
