@@ -4,6 +4,8 @@ import streamlit as st
 import pandas as pd
 import joblib
 import requests
+import altair as alt
+from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.exceptions import NotFittedError
 from src.analysis.analysis import (
     get_top_predicted_books
@@ -12,6 +14,111 @@ from src.analysis.analysis import (
 HF_BASE_URL = "https://huggingface.co/datasets/revolucia/"
 DATASET_PATH = "bookwise-analytics-ml/resolve/main/modeling_data/"
 MODEL_PATH = "popularity-score-model/"
+
+
+def _load_eval_predictions_with_actuals():
+    """Load eval predictions with actuals from the local notebook output."""
+    try:
+        df = pd.read_csv("outputs/model_plots/model_eval_predictions.csv")
+        return df, "actual_score", "predicted_score"
+    except (
+        FileNotFoundError,
+        pd.errors.EmptyDataError,
+        pd.errors.ParserError,
+        OSError
+    ):
+        return None, None, None
+
+
+def _render_model_metrics(eval_df):
+    """Display model performance metrics (R² and RMSE)."""
+    r2 = r2_score(eval_df["actual_score"], eval_df["predicted_score"])
+    rmse = mean_squared_error(
+        eval_df["actual_score"],
+        eval_df["predicted_score"],
+        squared=False
+    )
+    st.caption(f"R²: {r2:.3f} | RMSE: {rmse:.3f}")
+
+
+def _render_residuals_plot(eval_df):
+    """Render residuals vs predicted plot."""
+    eval_df_copy = eval_df.copy()
+    eval_df_copy['residual'] = (
+        eval_df_copy['actual_score'] - eval_df_copy['predicted_score']
+    )
+    scatter = alt.Chart(eval_df_copy).mark_circle(size=60, opacity=0.6).encode(
+        x=alt.X('predicted_score', title='Predicted engagement score'),
+        y=alt.Y('residual', title='Residual (Actual - Predicted)'),
+        tooltip=['predicted_score', 'residual']
+    )
+    zero_line = pd.DataFrame({'y': [0]})
+    ref_line = alt.Chart(zero_line).mark_rule(color='firebrick').encode(y='y')
+    chart = (scatter + ref_line).properties(height=360)
+    return chart
+
+
+def _render_model_performance(
+    model,
+    features_df,
+    actual_col="popularity_score",
+    predicted_col=None
+):
+    """Plot predicted vs actual engagement scores
+    with metrics
+    returns bool success."""
+    if features_df is None:
+        return False
+    if actual_col not in features_df.columns:
+        return False
+
+    eval_df = features_df.dropna(subset=[actual_col]).copy()
+    if eval_df.empty:
+        return False
+
+    try:
+        if predicted_col and predicted_col in eval_df.columns:
+            eval_df["predicted_score"] = eval_df[predicted_col]
+        else:
+            if model is None:
+                return False
+            features_for_pred = eval_df.drop(
+                columns=[actual_col, "title_clean", "goodreads_id_clean"],
+                errors="ignore"
+            )
+            eval_df["predicted_score"] = model.predict(features_for_pred)
+
+        eval_df["actual_score"] = eval_df[actual_col]
+
+        diag_min = (
+            float(eval_df[["actual_score", "predicted_score"]].min().min())
+        )
+        diag_max = (
+            float(eval_df[["actual_score", "predicted_score"]].max().max())
+        )
+        scatter = alt.Chart(eval_df).mark_circle(size=60, opacity=0.6).encode(
+            x=alt.X("actual_score", title="Actual engagement score"),
+            y=alt.Y("predicted_score", title="Predicted engagement score"),
+            tooltip=["actual_score", "predicted_score"]
+        )
+        diagonal = alt.Chart(
+            pd.DataFrame({
+                "actual_score": [diag_min, diag_max],
+                "predicted_score": [diag_min, diag_max]
+            })
+        ).mark_line(color="firebrick").encode(
+            x="actual_score",
+            y="predicted_score"
+        )
+        st.altair_chart(
+            (scatter + diagonal).properties(height=360),
+            use_container_width=True
+        )
+    except (ValueError, TypeError, AttributeError, NotFittedError) as exc:
+        st.error(f"Could not plot predicted vs actual: {exc}")
+        return False
+
+    return True
 
 
 def _safe_hf_csv(
@@ -76,7 +183,7 @@ def page_model_runner_body():
     st.write("## Catalog Title Selector")
 
     st.info(
-        "**Business Requirement 1: High-Engagement Prediction**\n\n"
+        "**Business Requirement 2: High-Engagement Prediction**\n\n"
         "This page displays the books from the supply catalog with the "
         "highest predicted engagement scores. Use the search bar to look up "
         "the predicted score for any specific book.\n\n"
@@ -126,6 +233,48 @@ def page_model_runner_body():
     model = _load_hf_model_pkl(model_filename)
     if model is None:
         return
+
+    st.write("## Model Performance Context")
+    plotted = _render_model_performance(model, features_df)
+    if not plotted:
+        eval_df, act_col, pred_col = _load_eval_predictions_with_actuals()
+        if eval_df is None:
+            st.info(
+                "No evaluation file with actuals found. "
+                "Save model_eval_predictions.csv "
+                "(actual_score, predicted_score) to outputs/model_plots/ "
+                "to enable this chart."
+            )
+        else:
+            st.write("Validation Predictions")
+            _render_model_metrics(eval_df)
+
+            # eesponsive layout: side-by-side on desktop, stacked on mobile
+            cols = st.columns(2)
+            with cols[0]:
+                _render_model_performance(
+                    model=None,
+                    features_df=eval_df,
+                    actual_col=act_col,
+                    predicted_col=pred_col
+                )
+                st.caption(
+                    "A strong linear relationship between actual and "
+                    "predicted scores indicates the model generalizes well. "
+                    "Most points clustered near the diagonal line show the "
+                    "model predicts book popularity accurately for the "
+                    "majority of cases, with only a few outliers."
+                )
+            with cols[1]:
+                residuals_chart = _render_residuals_plot(eval_df)
+                st.altair_chart(residuals_chart, use_container_width=True)
+                st.caption(
+                    "Most residuals centered around zero indicate unbiased "
+                    "predictions overall. Random scatter suggests good model "
+                    "fit with no systematic errors. Consistent residual "
+                    "patterns across validation and test sets confirm that "
+                    "error characteristics generalize well to unseen data."
+                )
 
     st.write("## Select from Supply Catalog")
     st.write(
