@@ -172,7 +172,7 @@ def _feature_importance_chart():
         "- External behavioral signals dominate the top positions.\n"
         "- Features such as rating volume, votes, and like percentage provide "
         "the strongest contribution to engagement prediction.\n"
-        "- Publication recency (Decade `2010`) has notable importance among "
+        "- Publication recency (Decade `2010`) has minor importance among "
         "metadata, validating that newer books drive higher engagement."
         "- Metadata fields play a secondary role compared to external "
         "popularity signals."
@@ -315,6 +315,6 @@ def page_book_analytics_explorer_body():
         "and **editorial curation** (which books to promote to members).\n\n"
         "**Recommendation:** Prioritise licensing titles with high external"
         " popularity scores when data is available. "
-        "For new releases without external data, focus on publication recency "
+        "For titles without external data, focus on publication recency "
         "and awards as secondary metadata indicators of potential engagement."
     )
