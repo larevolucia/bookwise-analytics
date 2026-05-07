@@ -1,6 +1,6 @@
 # Bookwise Analytics: Predictive Book Recommendation System
 
-Live App: [Streamlit Dashboard](https://bookwise-analytics-1d891f772a24.herokuapp.com/)
+Live App: [Streamlit Dashboard](https://bookwise-analyics-1d891f772a24.herokuapp.com/)
 
 Project Repo: [GitHub Repository](https://github.com/users/larevolucia/projects/15)
 
